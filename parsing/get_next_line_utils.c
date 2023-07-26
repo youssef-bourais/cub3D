@@ -6,11 +6,11 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:19:23 by msodor            #+#    #+#             */
-/*   Updated: 2022/12/22 12:34:17 by msodor           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:30:31 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/cub3d.h"
 
 int	ft_strlen(char *str)
 {

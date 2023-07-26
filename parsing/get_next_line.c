@@ -6,11 +6,11 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 16:48:25 by msodor            #+#    #+#             */
-/*   Updated: 2022/12/22 13:26:25 by msodor           ###   ########.fr       */
+/*   Updated: 2023/07/26 15:30:28 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/cub3d.h"
 
 char	*get_first(char *stat)
 {
