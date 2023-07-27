@@ -6,21 +6,11 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/07/27 17:45:11 by msodor           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:50:44 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
-
-#define WIDTH 1280
-#define HEIGHT 720
-
-static mlx_image_t* image;
 
 // -----------------------------------------------------------------------------
 
@@ -48,13 +38,13 @@ void ft_hook(void* param)
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(mlx, MLX_KEY_W))
 		image->instances[0].y -= 2;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(mlx, MLX_KEY_S))
 		image->instances[0].y += 2;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
 		image->instances[0].x -= 2;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
 		image->instances[0].x += 2;
 }
 
@@ -65,7 +55,6 @@ int32_t main()
 {
 	mlx_t* mlx;
 
-	// Gotta error check this stuff
 	mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", 0);
 
 	image = mlx_new_image(mlx, 5, 5);
