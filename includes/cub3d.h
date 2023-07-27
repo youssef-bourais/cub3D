@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/07/26 15:49:42 by msodor           ###   ########.fr       */
+/*   Updated: 2023/07/27 15:30:10 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 #  define BUFFER_SIZE 29
 # endif
 
+# include "../MLX42/MLX42.h"
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <limits.h>
 
 int		ft_strlen(char *str);
 int		ft_strchr(char *str, char c);
