@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/07/27 17:34:40 by msodor           ###   ########.fr       */
+/*   Updated: 2023/07/27 17:45:11 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ void ft_randomize(void* param)
 	{
 		for (uint32_t y = 0; y < image->height; ++y)
 		{
-			uint32_t color = ft_pixel(
-			 0xFF,
-			 0xFF,
-			 0xFF,
-			 0xFF 
-			);
+			uint32_t color = ft_pixel(0xFF, 0xFF, 0xFF, 0xFF);
 			mlx_put_pixel(image, i, y, color);
 		}
 	}
@@ -63,6 +58,7 @@ void ft_hook(void* param)
 		image->instances[0].x += 2;
 }
 
+
 // -----------------------------------------------------------------------------
 
 int32_t main()
@@ -70,23 +66,11 @@ int32_t main()
 	mlx_t* mlx;
 
 	// Gotta error check this stuff
-	if (!(mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", true)))
-	{
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (!(image = mlx_new_image(mlx, 5, 5)))
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-	{
-		mlx_close_window(mlx);
-		puts(mlx_strerror(mlx_errno));
-		return(EXIT_FAILURE);
-	}
+	mlx = mlx_init(WIDTH, HEIGHT, "CUB3D", 0);
+
+	image = mlx_new_image(mlx, 5, 5);
+
+	mlx_image_to_window(mlx, image, 0, 0);
 	
 	mlx_loop_hook(mlx, ft_randomize, mlx);
 	mlx_loop_hook(mlx, ft_hook, mlx);
