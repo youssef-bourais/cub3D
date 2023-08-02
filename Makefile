@@ -10,6 +10,7 @@ DEPENDENCIES = -framework Cocoa -framework OpenGL -framework IOKit
 
 glfw = $(shell brew --prefix glfw)
 
+PARS = $(addprefix parser/, get_map.c get_next_line.c get_next_line_u)
 SRS = cub3d.c
 
 all: $(NAME)
