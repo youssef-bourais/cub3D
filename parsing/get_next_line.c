@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 16:48:25 by msodor            #+#    #+#             */
-/*   Updated: 2023/07/26 15:30:28 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/03 10:07:02 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*get_rest(char *stat)
 	}
 	if (stat[i] == '\n')
 		i++;
-	rest = malloc(ft_strlen(stat) - i + 1);
+	rest = malloc(f_strlen(stat) - i + 1);
 	while (stat && stat[i])
 		rest[j++] = stat[i++];
 	rest[j] = '\0';
@@ -75,7 +75,7 @@ char	*readfd(int fd, char *stat)
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	while (reading_index && ft_strchr(stat, '\n') == 0)
+	while (reading_index && f_strchr(stat, '\n') == 0)
 	{
 		reading_index = read(fd, buffer, BUFFER_SIZE);
 		if (reading_index < 0)
@@ -85,7 +85,7 @@ char	*readfd(int fd, char *stat)
 			return (NULL);
 		}
 		buffer[reading_index] = '\0';
-		stat = ft_strjoin(stat, buffer);
+		stat = f_strjoin(stat, buffer);
 	}
 	free(buffer);
 	return (stat);

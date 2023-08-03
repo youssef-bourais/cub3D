@@ -6,13 +6,13 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 12:19:23 by msodor            #+#    #+#             */
-/*   Updated: 2023/07/26 15:30:31 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/03 10:06:31 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	ft_strlen(char *str)
+int	f_strlen(char *str)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*f_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	int		len;
@@ -34,7 +34,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1 = malloc(1);
 		s1[0] = '\0';
 	}
-	len = ft_strlen(s1) + ft_strlen(s2);
+	len = f_strlen(s1) + f_strlen(s2);
 	str = malloc((len + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
@@ -50,7 +50,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int	ft_strchr(char *str, char c)
+int	f_strchr(char *str, char c)
 {
 	int	i;
 

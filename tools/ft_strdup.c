@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/03 15:12:38 by msodor           ###   ########.fr       */
+/*   Created: 2022/10/12 16:38:08 by msodor            #+#    #+#             */
+/*   Updated: 2023/08/03 10:03:08 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "../includes/cub3d.h"
 
-int main(int ac, char **av)
+char	*ft_strdup(const char *s1)
 {
-	t_elems map;
+	size_t	len;
+	size_t	i;
+	char	*s2;
 
-	if (ac != 2)
+	i = 0;
+	len = ft_strlen(s1);
+	s2 = malloc(sizeof(char) * (len + 1));
+	if (!s2)
+		return (0);
+	while (s1[i])
 	{
-		printf("Error\n");
-		return 1;
+		s2[i] = s1[i];
+		i++;
 	}
-	init_info(&map, av[1]);
-	get_game_info(&map);
-	if (!map.ea || !map.no || !map.so || !map.we)
-	{
-		perror("Error\n");
-		return 1;
-	}
-	printf("EA: %s\n", map.ea);
-	printf("NO: %s\n", map.no);
-	printf("SO: %s\n", map.so);
-	printf("WE: %s\n", map.we);
+	s2[i] = '\0';
+	return (s2);
 }
