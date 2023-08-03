@@ -75,12 +75,23 @@ void	get_game_info(t_elems *map)
 {
 	char *line;
 	char **info;
+	char *one_line;
 
-	while((line = get_next_line(map->fd)))
+	line = get_next_line(map->fd);
+	while(line)
 	{
 		info = ft_split(line, " \t\n");
 		if (set_info(map, info) == 1)
 			break;
 		free_array(info);
+		line = get_next_line(map->fd);
 	}
+	while (line)
+	{
+		one_line = ft_strjoin(one_line, line);
+		line = get_next_line(map->fd);
+	}
+	printf("%s\n", one_line);
+	
+
 }
