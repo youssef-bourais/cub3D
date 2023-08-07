@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/07 12:10:42 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:37:15 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,21 +65,21 @@ void ft_hook(void* param)
 }
 
 // -----------------------------------------------------------------------------
-int32_t main(int32_t ac, char **av)
+int main(int ac, char **av)
 {
 	mlx_t* mlx;
 	t_elems map;
 
 	if (ac != 2)
 	{
-		printf("Error\n");
+		printf("Errorr\n");
 		return 1;
 	}
 	init_info(&map, av[1]);
 	get_game_info(&map);
-	if (!map.ea || !map.no || !map.so || !map.we)
+	if (!map.ea || !map.no || !map.so || !map.we || map.ceiling != 1 || map.floor != 1)
 	{
-		printf("Error\n");
+		printf("Errorr\n");
 		return 1;
 	}
 	if (check_map(&map) || check_wals(&map) || check_map_closed(&map))
@@ -88,15 +88,15 @@ int32_t main(int32_t ac, char **av)
 		return 1;
 	}
 
-	// mlx = mlx_init(WIDTH, HEIGHT, "MLX42", 0);
-	// image = mlx_new_image(mlx, WIDTH, HEIGHT);
+	mlx = mlx_init(WIDTH, HEIGHT, "MLX42", 0);
+	image = mlx_new_image(mlx, 5, 5);
 
-	// mlx_image_to_window(mlx, image, 0, 0);
+	mlx_image_to_window(mlx, image, 0, 0);
 
-	// mlx_loop_hook(mlx, ft_randomize, mlx);
-	// mlx_loop_hook(mlx, ft_hook, mlx);
+	mlx_loop_hook(mlx, ft_randomize, mlx);
+	mlx_loop_hook(mlx, ft_hook, mlx);
 
-	// mlx_loop(mlx);
-	// mlx_terminate(mlx);
-	// return (EXIT_SUCCESS);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+	return (EXIT_SUCCESS);
 }

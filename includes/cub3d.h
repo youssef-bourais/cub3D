@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/04 20:06:53 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/07 15:15:57 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ typedef struct s_elems
 	int 	width;
 	int 	height;
 	char	**map;
+	char	*player;
+	int		player_x;
+	int		player_y;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -87,4 +90,5 @@ void	get_game_info(t_elems *map);
 int check_map(t_elems *elem);
 int check_map_closed(t_elems *elem);
 int check_wals(t_elems *elems);
+void	ft_err(char *str);
 #endif
