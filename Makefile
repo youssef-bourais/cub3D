@@ -1,6 +1,6 @@
 NAME = cub3D
 
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 
 CC = cc
 
@@ -19,8 +19,8 @@ OBJS = $(SRS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) Makefile
-	$(CC) $(FLAGS) -o $(NAME) $(SRS) $(DEPENDENCIES) -lglfw -L"$(glfw)/lib" $(mlx_lib)
-
+#$(CC) $(FLAGS) -o $(NAME) $(SRS) $(DEPENDENCIES) -lglfw -L"$(glfw)/lib" $(mlx_lib)
+	$(CC) $(FLAGS) -o $(NAME) $(SRS)
 clean:
 	rm -f $(OBJS)
 
