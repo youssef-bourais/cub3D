@@ -1,6 +1,6 @@
 NAME = cub3D
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+FLAGS = #-Wall -Wextra -Werror -fsanitize=address -g
 
 CC = cc
 
@@ -17,8 +17,8 @@ SRS = cub3d.c $(PARS) $(TOOLS)
 all: $(NAME)
 
 $(NAME): $(SRS) Makefile
-# @$(CC) $(FLAGS) -o $(NAME) $(SRS) $(DEPENDENCIES) -lglfw -L"$(glfw)/lib" $(mlx_lib)
-	@$(CC) $(FLAGS) -o $(NAME) $(SRS)
+	@$(CC) $(FLAGS) -o $(NAME) $(SRS) $(DEPENDENCIES) -lglfw -L"$(glfw)/lib" $(mlx_lib)
+# @$(CC) $(FLAGS) -o $(NAME) $(SRS)
 	@echo "cub3D compiled"
 
 clean:

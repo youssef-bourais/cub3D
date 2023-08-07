@@ -1,10 +1,10 @@
 C 10,60,80
 NO ./textures/huge_1.png
+SO ./textures/wall.png
 
 
 WE ./textures/huge_4.png
 EA ./textures/huge_2.png
-SO ./textures/wall.png
 F 125,0,125
 
         111111111111111111111111111111111

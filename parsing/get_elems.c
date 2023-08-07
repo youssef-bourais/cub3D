@@ -23,8 +23,6 @@ void	init_info(t_elems *map, char *file)
 	map->map = NULL;
 	map->width = 0;
 	map->height = 0;
-	// map->ceiling = 0;
-	// map->floor = 0;
 }
 void	free_array(char **array)
 {
@@ -57,9 +55,10 @@ int	set_info(t_elems *map, char **info)
 		rgb = ft_split(info[1], ",");
 		if (!rgb[0] || !rgb[1] || !rgb[2])
 			return 1;
-		map->floor[0] = ft_atoi(rgb[0]);
-		map->floor[1] = ft_atoi(rgb[1]);
-		map->floor[2] = ft_atoi(rgb[2]);
+		map->f_color[0] = ft_atoi(rgb[0]);
+		map->f_color[1] = ft_atoi(rgb[1]);
+		map->f_color[2] = ft_atoi(rgb[2]);
+		map->floor = 1;
 		free_array(rgb);
 		return 0;
 	}
@@ -68,9 +67,10 @@ int	set_info(t_elems *map, char **info)
 		rgb = ft_split(info[1], ",");
 		if (!rgb[0] || !rgb[1] || !rgb[2])
 			return 1;
-		map->ceiling[0] = ft_atoi(rgb[0]);
-		map->ceiling[1] = ft_atoi(rgb[1]);
-		map->ceiling[2] = ft_atoi(rgb[2]);
+		map->c_color[0] = ft_atoi(rgb[0]);
+		map->c_color[1] = ft_atoi(rgb[1]);
+		map->c_color[2] = ft_atoi(rgb[2]);
+		map->ceiling = 1;
 		free_array(rgb);
 		return 0;
 	}

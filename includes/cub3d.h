@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/03 19:16:40 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/04 20:06:53 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,34 @@
 # include <limits.h>
 # include <string.h>
 
+static mlx_image_t *image;
+static mlx_image_t *wall;
+
+# define PI 3.1415926535
+# define WIDTH 1280
+# define HEIGHT 720
+
 typedef struct s_elems
 {
 	char	*file;
+	int		fd;
 	int 	width;
 	int 	height;
 	char	**map;
-	int		fd;
 	char	*no;
 	char	*so;
 	char	*we;
 	char	*ea;
-	int		floor[3];
-	int		ceiling[3];
-}				t_elems;
+	int		floor;
+	int		ceiling;
+	int		f_color[3];
+	int		c_color[3];
+}	t_elems;
+
+typedef struct s_info
+{
+	t_elems *elems;
+} t_info;
 
 /*tools*/
 int		ft_atoi(const char *str);
