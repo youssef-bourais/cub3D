@@ -6,19 +6,19 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/07 15:15:57 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/07 19:06:15 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
-#define CUB3D_H
+# define CUB3D_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 29
 # endif
 
-#define WIDTH 1280
-#define HEIGHT 720
+# define WIDTH 1280
+# define HEIGHT 720
 
 # include "../MLX42/MLX42.h"
 # include <stdio.h>
@@ -30,10 +30,6 @@
 # include <limits.h>
 # include <string.h>
 
-static mlx_image_t *image;
-static mlx_image_t *wall;
-
-# define PI 3.1415926535
 # define WIDTH 1280
 # define HEIGHT 720
 
@@ -41,8 +37,8 @@ typedef struct s_elems
 {
 	char	*file;
 	int		fd;
-	int 	width;
-	int 	height;
+	int		width;
+	int		height;
 	char	**map;
 	char	*player;
 	int		player_x;
@@ -59,8 +55,8 @@ typedef struct s_elems
 
 typedef struct s_info
 {
-	t_elems *elems;
-} t_info;
+	t_elems	*elems;
+}	t_info;
 
 /*tools*/
 int		ft_atoi(const char *str);
@@ -85,10 +81,12 @@ char	*f_strjoin(char *s1, char *s2);
 char	*get_next_line(int fd);
 void	init_info(t_elems *map, char *file);
 void	free_array(char **array);
-int		set_info(t_elems *map, char **info);
+void	set_info(t_elems *map, char **info);
 void	get_game_info(t_elems *map);
-int check_map(t_elems *elem);
-int check_map_closed(t_elems *elem);
-int check_wals(t_elems *elems);
+int		check_map(t_elems *elem);
+int		check_map_closed(t_elems *elem);
+int		check_wals(t_elems *elems);
 void	ft_err(char *str);
+void	ft_err(char *str);
+
 #endif
