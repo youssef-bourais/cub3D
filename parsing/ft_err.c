@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_err.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 13:27:43 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/07 18:14:29 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/08 18:23:51 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ void	ft_err(char *str)
 {
 	write(2, "Error\n", 6);
 	write(2, str, ft_strlen(str));
-	exit(0);
+	exit(1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/07 19:06:15 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/08 18:36:58 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 29
 # endif
-
-# define WIDTH 1280
-# define HEIGHT 720
 
 # include "../MLX42/MLX42.h"
 # include <stdio.h>
@@ -30,8 +27,18 @@
 # include <limits.h>
 # include <string.h>
 
-# define WIDTH 1280
-# define HEIGHT 720
+# define SQUAR_SIZE 50
+# define PLAYER_SIZE 15
+
+#define WHITE 0xFFFFFFFF
+#define BLUE 0xFFFF
+#define RED 0xFF0000FF
+#define PURPLE 0xFF00FFFF
+#define YELLOW 0xFFFF00FF
+
+mlx_t* mlx;
+static	mlx_image_t* image;
+static	mlx_image_t* player;
 
 typedef struct s_elems
 {
@@ -74,7 +81,6 @@ char	*ft_strdup(const char *s1);
 char	*ft_itoa(int n);
 /*-------------------------*/
 
-// static	mlx_image_t* image;
 int		f_strlen(char *str);
 int		f_strchr(char *str, char c);
 char	*f_strjoin(char *s1, char *s2);
