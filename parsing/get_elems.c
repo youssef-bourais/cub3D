@@ -217,6 +217,8 @@ int	check_map()
 					ft_err("Duplicate player\n");
 				g_elems.player_x = j;
 				g_elems.player_y = i;
+				g_elems.pos_x_p = (j*SQUAR_SIZE) + 17;
+				g_elems.pos_y_p = (i*SQUAR_SIZE) + 17;
 				g_elems.player = ft_strdup(&g_elems.map[i][j]);
 			}
 			j++;

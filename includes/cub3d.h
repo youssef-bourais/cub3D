@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/09 20:23:35 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/10 11:26:28 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_elems
 	char	*ea;
 	int		floor;
 	int		ceiling;
+	int		pos_x_p;
+	int		pos_y_p;
 	int		f_color[3];
 	int		c_color[3];
 }	t_elems;

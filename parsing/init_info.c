@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:25:35 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/09 19:30:45 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/10 11:28:29 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,6 @@ void	init_info(char *file)
 	g_elems.ceiling = 0;
 	g_elems.player_x = 0;
 	g_elems.player_y = 0;
+	g_elems.pos_x_p = 0;
+	g_elems.pos_y_p = 0;
 }
