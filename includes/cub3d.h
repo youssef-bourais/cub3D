@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/08 18:36:58 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:23:35 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 #define RED 0xFF0000FF
 #define PURPLE 0xFF00FFFF
 #define YELLOW 0xFFFF00FF
+#define BLACK 0x00000000
 
 mlx_t* mlx;
 static	mlx_image_t* image;
@@ -60,10 +61,19 @@ typedef struct s_elems
 	int		c_color[3];
 }	t_elems;
 
-typedef struct s_info
+t_elems g_elems;
+
+typedef struct s_norm
 {
-	t_elems	*elems;
-}	t_info;
+	int dx;
+	int dy;
+	int steps;
+	float x;
+	float y;
+	float x_step;
+	float y_step;
+	float slope;
+}	t_norm;
 
 /*tools*/
 int		ft_atoi(const char *str);
@@ -85,13 +95,13 @@ int		f_strlen(char *str);
 int		f_strchr(char *str, char c);
 char	*f_strjoin(char *s1, char *s2);
 char	*get_next_line(int fd);
-void	init_info(t_elems *map, char *file);
+void	init_info(char *file);
 void	free_array(char **array);
-void	set_info(t_elems *map, char **info);
-void	get_game_info(t_elems *map);
-int		check_map(t_elems *elem);
-int		check_map_closed(t_elems *elem);
-int		check_wals(t_elems *elems);
+void	set_info(char **info);
+void	get_game_info();
+int		check_map();
+int		check_map_closed();
+int		check_wals();
 void	ft_err(char *str);
 void	ft_err(char *str);
 
