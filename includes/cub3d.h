@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/10 11:26:28 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:11:23 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # include <string.h>
 
 # define SQUAR_SIZE 50
-# define PLAYER_SIZE 15
+# define PLAYER_SIZE 16
+# define PI 3.14159265359
 
 #define WHITE 0xFFFFFFFF
 #define BLUE 0xFFFF
