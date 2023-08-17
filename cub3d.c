@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/11 18:56:09 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/17 09:57:25 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	checks()
 {
 	get_game_info();
 	check_map();
+	init_player_a(g_elems.player);
 	check_map_closed();
 	check_wals();
 	if (!g_elems.ea || !g_elems.no || !g_elems.so || !g_elems.we)
@@ -75,8 +76,8 @@ void plot_map()
 		mlx_image_to_window(mlx, image, 0, 0);
 		b++;
 	}
-	draw_grid();
 	i = 0;
+	draw_grid();
 	while (i < g_elems.height)
 	{
 		int j = 0;
@@ -115,22 +116,40 @@ void DDA(int x0, int y0, int x1, int y1)
 		int yy = round(norm.y);
 		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] != '1')
 			mlx_put_pixel(image, round(norm.x), round(norm.y), PURPLE);
+		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] == '1')
+			break;
 		norm.x = norm.x + norm.x_step;
 		norm.y = norm.y + norm.y_step;
 		i++;
 	}
 }
 
+void	draw_lines(int x, int y)
+{
+	float new_x = cos(g_elems.player_angle)*100;
+	float new_y = sin(g_elems.player_angle)*100;
+
+	// DDA(x, y, x + new_x - sin(-60)*g_elems.width*SQUAR_SIZE, y + new_y + cos(-60)*g_elems.width*SQUAR_SIZE);
+
+	// DDA(x, y, x + new_x + sin(60)*g_elems.width*SQUAR_SIZE, y + new_y + cos(60)*g_elems.width*SQUAR_SIZE);
+
+	// DDA(x, y, x + new_x, y + new_y);
+	DDA(x, y, x + new_x, y + new_y);
+}
+
 void draw_player(uint32_t color, int x, int y)
 {
 	g_elems.pos_x_p = x + g_elems.pos_x_p;
 	g_elems.pos_y_p = y + g_elems.pos_y_p;
-	x = g_elems.pos_x_p + x;
-	y = g_elems.pos_y_p + y;
+	x = g_elems.pos_x_p;
+	y = g_elems.pos_y_p;
 
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
-    while (pixel_x <= x + radius)
+
+	draw_lines(x, y);
+
+	while (pixel_x <= x + radius)
     {
 		int pixel_y = y - radius;
         while (pixel_y <= y + radius)
@@ -140,59 +159,66 @@ void draw_player(uint32_t color, int x, int y)
 			pixel_y++;
         }
 		pixel_x++;
-    }	
-	DDA(g_elems.pos_x_p, g_elems.pos_y_p, g_elems.pos_x_p, g_elems.pos_y_p - 100);
+    }
 }
 
-void rotate_player(double x, double y, double angle, int *rotated_x, int *rotated_y) 
-{	
-    *rotated_x = x * cos(angle) - y * sin(angle);
-    *rotated_y = x * sin(angle) + y * cos(angle);
-
-	// plot_map();
-	// draw_player(BLUE, *rotated_x, *rotated_y);
+void rotate_player()
+{
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
+	{
+		g_elems.player_angle = g_elems.player_angle - 1*M_PI/(double)180;
+		plot_map();
+		draw_player(BLUE, 0, 0);
+	}
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
+	{
+		g_elems.player_angle = g_elems.player_angle + 1*M_PI/(double)180;
+		plot_map();
+		draw_player(BLUE, 0, 0);
+	}
 }
 
 void keyhook()
 {
 	int move;
+	if (g_elems.player_angle < 0)
+		g_elems.player_angle += 2 * PI;
+	if (g_elems.player_angle >= 2 * PI)
+    	g_elems.player_angle -= 2 * PI;
 	move = 2;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_SPACE))
 		move = 5;
-	// if (mlx_is_key_down(mlx, MLX_KEY_D))
-	// {
-	// 	int a;
-	// 	int b;
-	// 	rotate_player(g_elems.pos_x_p, g_elems.pos_y_p, PI/2, &a, &b);
-	// 	plot_map();
-	// 	draw_player(BLUE, b, a);
-	// }
-	// if (mlx_is_key_down(mlx, MLX_KEY_A))
-	// {
-	// 	plot_map();
-	// 	draw_player(BLUE, move, 0);
-	// }
+	rotate_player();
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) && g_elems.map[((g_elems.pos_y_p - (PLAYER_SIZE - move))/SQUAR_SIZE)][((g_elems.pos_x_p)/SQUAR_SIZE)] != '1')
 	{
+		float new_x = sin(g_elems.player_angle) * move;
+		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
-		draw_player(BLUE, 0, -move);
+		draw_player(BLUE, new_x, new_y);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) && g_elems.map[((g_elems.pos_y_p + (PLAYER_SIZE - move))/SQUAR_SIZE)][((g_elems.pos_x_p)/SQUAR_SIZE)] != '1')
 	{
+		float new_x = sin(g_elems.player_angle) * move;
+		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
 		draw_player(BLUE, 0, move);
+		draw_player(BLUE, new_x, -new_y);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT) && g_elems.map[((g_elems.pos_y_p)/SQUAR_SIZE)][((g_elems.pos_x_p - (PLAYER_SIZE - move))/SQUAR_SIZE)] != '1')
 	{
+		float new_x = sin(g_elems.player_angle) * move;
+		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
-		draw_player(BLUE, -move, 0);
+		draw_player(BLUE, new_x,  new_y);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT) && g_elems.map[((g_elems.pos_y_p)/SQUAR_SIZE)][((g_elems.pos_x_p + (PLAYER_SIZE - move))/SQUAR_SIZE)] != '1')
 	{
+		float new_x = sin(g_elems.player_angle) * move;
+		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
-		draw_player(BLUE, move, 0);
+		draw_player(BLUE, new_x,  new_y);
 	}
 }
 
@@ -204,6 +230,7 @@ int	main(int ac, char **av)
 	checks();
 	plot_map();
 	draw_player(BLUE, 0, 0);
+	// DDA(g_elems.pos_x_p, g_elems.pos_y_p, g_elems.pos_x_p, g_elems.pos_y_p - 100);
 	mlx_loop_hook(mlx, keyhook, NULL);
 	mlx_loop(mlx);
 }

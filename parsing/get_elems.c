@@ -219,7 +219,7 @@ int	check_map()
 				g_elems.player_y = i;
 				g_elems.pos_x_p = (j*SQUAR_SIZE) + SQUAR_SIZE/2;
 				g_elems.pos_y_p = (i*SQUAR_SIZE) + SQUAR_SIZE/2;
-				g_elems.player = ft_strdup(&g_elems.map[i][j]);
+				g_elems.player = ft_substr(g_elems.map[i], j, 1);
 			}
 			j++;
 		}

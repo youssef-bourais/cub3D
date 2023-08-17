@@ -6,11 +6,23 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:25:35 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/10 11:28:29 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/16 13:00:42 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+void init_player_a(char *p)
+{
+	if (!ft_strcmp(p, "N"))
+		g_elems.player_angle = 3 * PI / 2;
+	else if (!ft_strcmp(p, "S"))
+		g_elems.player_angle = PI / 2;
+	else if (!ft_strcmp(p, "W"))
+		g_elems.player_angle = PI;
+	else if (!ft_strcmp(p, "E"))
+		g_elems.player_angle = 0;
+}
 
 void	init_info(char *file)
 {

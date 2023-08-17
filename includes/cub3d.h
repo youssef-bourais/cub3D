@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/11 17:11:23 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:43:17 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_elems
 	char	*player;
 	int		player_x;
 	int		player_y;
+	double	player_angle;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -79,6 +80,7 @@ typedef struct s_norm
 }	t_norm;
 
 /*tools*/
+void init_player_a(char *p);
 int		ft_atoi(const char *str);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
