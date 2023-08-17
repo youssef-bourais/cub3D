@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/17 09:57:25 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:41:29 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,20 +124,15 @@ void DDA(int x0, int y0, int x1, int y1)
 	}
 }
 
-void	draw_lines(int x, int y)
+void	draw_lines(float x, float y)
 {
-	float new_x = cos(g_elems.player_angle)*100;
-	float new_y = sin(g_elems.player_angle)*100;
+	float new_x = cos(g_elems.player_angle)*g_elems.width*SQUAR_SIZE;
+	float new_y = sin(g_elems.player_angle)*g_elems.height*SQUAR_SIZE;
 
-	// DDA(x, y, x + new_x - sin(-60)*g_elems.width*SQUAR_SIZE, y + new_y + cos(-60)*g_elems.width*SQUAR_SIZE);
-
-	// DDA(x, y, x + new_x + sin(60)*g_elems.width*SQUAR_SIZE, y + new_y + cos(60)*g_elems.width*SQUAR_SIZE);
-
-	// DDA(x, y, x + new_x, y + new_y);
 	DDA(x, y, x + new_x, y + new_y);
 }
 
-void draw_player(uint32_t color, int x, int y)
+void draw_player(uint32_t color, float x, float y)
 {
 	g_elems.pos_x_p = x + g_elems.pos_x_p;
 	g_elems.pos_y_p = y + g_elems.pos_y_p;
@@ -146,9 +141,7 @@ void draw_player(uint32_t color, int x, int y)
 
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
-
 	draw_lines(x, y);
-
 	while (pixel_x <= x + radius)
     {
 		int pixel_y = y - radius;
@@ -178,47 +171,51 @@ void rotate_player()
 	}
 }
 
-void keyhook()
+void normalize_angle()
 {
-	int move;
 	if (g_elems.player_angle < 0)
-		g_elems.player_angle += 2 * PI;
-	if (g_elems.player_angle >= 2 * PI)
-    	g_elems.player_angle -= 2 * PI;
-	move = 2;
+		g_elems.player_angle += 2 * M_PI;
+	if (g_elems.player_angle >= 2 * M_PI)
+    	g_elems.player_angle -= 2 * M_PI;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_SPACE))
-		move = 5;
-	rotate_player();
-	if (mlx_is_key_down(mlx, MLX_KEY_UP) && g_elems.map[((g_elems.pos_y_p - (PLAYER_SIZE - move))/SQUAR_SIZE)][((g_elems.pos_x_p)/SQUAR_SIZE)] != '1')
-	{
-		float new_x = sin(g_elems.player_angle) * move;
-		float new_y = cos(g_elems.player_angle) * move;
-		plot_map();
+}
+
+void update_check_plot_player(float x, float y)
+{
+	int move_speed;
+	move_speed = 3;
+	float new_x = x * move_speed;
+	float new_y = y * move_speed;
+	if(g_elems.map[(int)(g_elems.pos_y_p + new_y)/SQUAR_SIZE][(int)(g_elems.pos_x_p + new_x)/SQUAR_SIZE] != '1')
 		draw_player(BLUE, new_x, new_y);
-	}
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) && g_elems.map[((g_elems.pos_y_p + (PLAYER_SIZE - move))/SQUAR_SIZE)][((g_elems.pos_x_p)/SQUAR_SIZE)] != '1')
+	else
+		draw_player(BLUE, 0, 0);
+}
+
+void keyhook()
+{
+	normalize_angle();
+	rotate_player();
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 	{
-		float new_x = sin(g_elems.player_angle) * move;
-		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
-		draw_player(BLUE, 0, move);
-		draw_player(BLUE, new_x, -new_y);
+		update_check_plot_player(cos(g_elems.player_angle), sin(g_elems.player_angle));
 	}
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT) && g_elems.map[((g_elems.pos_y_p)/SQUAR_SIZE)][((g_elems.pos_x_p - (PLAYER_SIZE - move))/SQUAR_SIZE)] != '1')
+	else if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
 	{
-		float new_x = sin(g_elems.player_angle) * move;
-		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
-		draw_player(BLUE, new_x,  new_y);
+		update_check_plot_player(-cos(g_elems.player_angle), -sin(g_elems.player_angle));
 	}
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT) && g_elems.map[((g_elems.pos_y_p)/SQUAR_SIZE)][((g_elems.pos_x_p + (PLAYER_SIZE - move))/SQUAR_SIZE)] != '1')
+	else if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
-		float new_x = sin(g_elems.player_angle) * move;
-		float new_y = cos(g_elems.player_angle) * move;
 		plot_map();
-		draw_player(BLUE, new_x,  new_y);
+		update_check_plot_player(cos(M_PI/2 - g_elems.player_angle), -sin(M_PI/2 - g_elems.player_angle));
+	}
+	else if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	{
+		plot_map();
+		update_check_plot_player(-cos(M_PI/2 - g_elems.player_angle), sin(M_PI/2 - g_elems.player_angle));
 	}
 }
 
@@ -230,7 +227,6 @@ int	main(int ac, char **av)
 	checks();
 	plot_map();
 	draw_player(BLUE, 0, 0);
-	// DDA(g_elems.pos_x_p, g_elems.pos_y_p, g_elems.pos_x_p, g_elems.pos_y_p - 100);
 	mlx_loop_hook(mlx, keyhook, NULL);
 	mlx_loop(mlx);
 }
