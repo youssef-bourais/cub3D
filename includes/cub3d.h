@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/17 17:38:12 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:44:29 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@
 
 # define SQUAR_SIZE 50
 # define PLAYER_SIZE 16
-# define PI 3.14159265359
+# define RAY_WIDTH 2
+# define RAYS_NUM (2500/RAY_WIDTH)
+# define FOV_ANGLE (60*(M_PI/180))
 
 #define WHITE 0xFFFFFFFF
 #define BLUE 0xFFFF
@@ -38,9 +40,16 @@
 #define YELLOW 0xFFFF00FF
 #define BLACK 0x00000000
 
+#define GREEN 0x00FF00FF
+#define ORANGE 0xFFA500FF
+#define PINK 0xFF69B4FF
+#define CYAN 0x00FFFFFF
+#define GRAY 0x808080FF
+#define BROWN 0xA52A2AFF
+
+
 mlx_t* mlx;
 static	mlx_image_t* image;
-static	mlx_image_t* player;
 
 typedef struct s_elems
 {

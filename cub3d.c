@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/17 17:41:29 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/18 18:50:30 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void draw_grid()
         int j = 0;
         while (j < g_elems.width * SQUAR_SIZE)
         {
-            // if (j % SQUAR_SIZE == 0 || i % SQUAR_SIZE == 0)
-            // {
-                mlx_put_pixel(image, j, i, BLACK);
-            // }
+			// if (j % SQUAR_SIZE == 0 || i % SQUAR_SIZE == 0)
+			// {
+				mlx_put_pixel(image, j, i, BLACK);
+			// }
             j++;
         }
         i++;
@@ -71,7 +71,6 @@ void plot_map()
 	if(b == 0)
 	{
 		mlx = mlx_init(SQUAR_SIZE * g_elems.width, SQUAR_SIZE * g_elems.height, "GAME", 0);
-
 		image = mlx_new_image(mlx, SQUAR_SIZE * g_elems.width, SQUAR_SIZE * g_elems.height);
 		mlx_image_to_window(mlx, image, 0, 0);
 		b++;
@@ -84,16 +83,16 @@ void plot_map()
 		while (g_elems.map[i][j] != '\0')
 		{
 			if(g_elems.map[i][j] == '1')
-				draw_square(RED, SQUAR_SIZE * j, SQUAR_SIZE * i);
+				draw_square(BLUE, SQUAR_SIZE * j, SQUAR_SIZE * i);
 			else if (g_elems.map[i][j] != ' ')
-				draw_square(WHITE, SQUAR_SIZE * j, SQUAR_SIZE * i);
+				draw_square(GRAY, SQUAR_SIZE * j, SQUAR_SIZE * i);
 			j++;
 		}
 		i++;
 	}
 }
 
-void DDA(int x0, int y0, int x1, int y1)
+void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 {
 	t_norm norm;
     norm.dx = x1 - x0;
@@ -115,7 +114,7 @@ void DDA(int x0, int y0, int x1, int y1)
 		int xx = round(norm.x);
 		int yy = round(norm.y);
 		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] != '1')
-			mlx_put_pixel(image, round(norm.x), round(norm.y), PURPLE);
+			mlx_put_pixel(image, round(norm.x), round(norm.y), color);
 		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] == '1')
 			break;
 		norm.x = norm.x + norm.x_step;
@@ -124,12 +123,41 @@ void DDA(int x0, int y0, int x1, int y1)
 	}
 }
 
-void	draw_lines(float x, float y)
+void creat_ray(float x, float y, double ray_angle)
 {
-	float new_x = cos(g_elems.player_angle)*g_elems.width*SQUAR_SIZE;
-	float new_y = sin(g_elems.player_angle)*g_elems.height*SQUAR_SIZE;
+	float new_x = cos(ray_angle)*g_elems.width*SQUAR_SIZE;//
+	float new_y = sin(ray_angle)*g_elems.height*SQUAR_SIZE;//
+	DDA(x, y, x + new_x, y + new_y, CYAN);
+	
+}
 
-	DDA(x, y, x + new_x, y + new_y);
+void cast_one_ray(float x, float y, double ray_angle)
+{
+	
+}
+
+void	cast_rays(float x, float y)
+{
+	// int ray_id = 0;
+	double ray_angle = g_elems.player_angle - FOV_ANGLE/2;
+
+	int i = 0;
+	while (i < RAYS_NUM)
+	{
+		creat_ray(x, y, ray_angle);
+		cast_one_ray(x, y, ray_angle);
+		ray_angle = ray_angle + FOV_ANGLE/RAYS_NUM;
+		// ray_id++;
+		i++;
+	}
+	
+}
+
+void draw_line(float x, float y)
+{
+	float new_x = cos(g_elems.player_angle)*100;
+	float new_y = sin(g_elems.player_angle)*100;
+	DDA(x, y, x + new_x, y + new_y, PURPLE);
 }
 
 void draw_player(uint32_t color, float x, float y)
@@ -141,14 +169,15 @@ void draw_player(uint32_t color, float x, float y)
 
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
-	draw_lines(x, y);
+	cast_rays(x, y);
+	draw_line(x, y);
 	while (pixel_x <= x + radius)
     {
 		int pixel_y = y - radius;
         while (pixel_y <= y + radius)
         {
             if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
-                mlx_put_pixel(image, pixel_x, pixel_y, BLUE);
+                mlx_put_pixel(image, pixel_x, pixel_y, RED);
 			pixel_y++;
         }
 		pixel_x++;
@@ -159,13 +188,13 @@ void rotate_player()
 {
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
-		g_elems.player_angle = g_elems.player_angle - 1*M_PI/(double)180;
+		g_elems.player_angle = g_elems.player_angle - 3*M_PI/(double)180;
 		plot_map();
 		draw_player(BLUE, 0, 0);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		g_elems.player_angle = g_elems.player_angle + 1*M_PI/(double)180;
+		g_elems.player_angle = g_elems.player_angle + 3*M_PI/(double)180;
 		plot_map();
 		draw_player(BLUE, 0, 0);
 	}
@@ -184,7 +213,7 @@ void normalize_angle()
 void update_check_plot_player(float x, float y)
 {
 	int move_speed;
-	move_speed = 3;
+	move_speed = 5;
 	float new_x = x * move_speed;
 	float new_y = y * move_speed;
 	if(g_elems.map[(int)(g_elems.pos_y_p + new_y)/SQUAR_SIZE][(int)(g_elems.pos_x_p + new_x)/SQUAR_SIZE] != '1')

@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:25:35 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/17 18:07:56 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:39:05 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void init_player_a(char *p)
 {
 	if (!ft_strcmp(p, "N"))
-		g_elems.player_angle = 3 * PI / 2;
+		g_elems.player_angle = 3 * M_PI / 2;
 	else if (!ft_strcmp(p, "S"))
-		g_elems.player_angle = PI / 2;
+		g_elems.player_angle = M_PI / 2;
 	else if (!ft_strcmp(p, "W"))
-		g_elems.player_angle = PI;
+		g_elems.player_angle = M_PI;
 	else if (!ft_strcmp(p, "E"))
 		g_elems.player_angle = 0;
 }
