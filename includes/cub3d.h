@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 12:06:39 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:19:42 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@
 # include <limits.h>
 # include <string.h>
 
-# define SQUAR_SIZE 50
-# define PLAYER_SIZE 16
-# define RAY_WIDTH 6
-# define RAYS_NUM (2500/RAY_WIDTH)
+# define WIDTH 2050
+# define HEIGHT 750
+
+# define SQUAR_SIZE 25
+# define PLAYER_SIZE 8
+# define RAY_WIDTH 5
+# define RAYS_NUM (2050/RAY_WIDTH)
 # define FOV_ANGLE (60*(M_PI/180))
 
 #define WHITE 0xFFFFFFFF

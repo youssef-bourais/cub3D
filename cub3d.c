@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 12:00:55 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:19:06 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void normalize_angle(double angle)
 		mlx_close_window(mlx);
 }
 
-void DDA(int x0, int y0, int x1, int y1, uint32_t color)
+void DDA(float x0, float y0, float x1, float y1, uint32_t color)
 {
 	t_norm norm;
     norm.dx = x1 - x0;
@@ -157,8 +157,8 @@ int in_map_pixel(int x, int y)
 
 void creat_ray(float x, float y, double ray_angle)
 {
-	float new_x = cos(ray_angle)*g_elems.width*SQUAR_SIZE;//
-	float new_y = sin(ray_angle)*g_elems.height*SQUAR_SIZE;//
+	float new_x = cos(ray_angle)*500;//
+	float new_y = sin(ray_angle)*500;//
 	DDA(x, y, x + new_x, y + new_y, CYAN);
 }
 
@@ -169,14 +169,14 @@ void creat_ray(float x, float y, double ray_angle)
 
 void	cast_rays(float x, float y)
 {
-	double ray_angle = g_elems.player_angle - FOV_ANGLE/2;
+	double ray_angle = g_elems.player_angle - (FOV_ANGLE/2);
 	int i = 0;
 	while (i < RAYS_NUM)
 	{
 		creat_ray(x, y, ray_angle);
 		// cast_one_ray(x, y, ray_angle);
-		ray_angle = ray_angle + FOV_ANGLE/RAYS_NUM;
-		normalize_angle(ray_angle);
+		ray_angle = ray_angle + (FOV_ANGLE/RAYS_NUM);
+		// normalize_angle(ray_angle);
 		i++;
 	}
 }
@@ -279,6 +279,7 @@ int	main(int ac, char **av)
 	checks();
 	plot_map();
 	draw_player(BLUE, 0, 0);
+	printf("%d %d \n",g_elems.width*SQUAR_SIZE, g_elems.height*SQUAR_SIZE);
 	mlx_loop_hook(mlx, keyhook, NULL);
 	mlx_loop(mlx);
 }
