@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/18 18:50:30 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:00:55 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,7 @@ void draw_grid()
         int j = 0;
         while (j < g_elems.width * SQUAR_SIZE)
         {
-			// if (j % SQUAR_SIZE == 0 || i % SQUAR_SIZE == 0)
-			// {
-				mlx_put_pixel(image, j, i, BLACK);
-			// }
+			mlx_put_pixel(image, j, i, BLACK);
             j++;
         }
         i++;
@@ -77,19 +74,29 @@ void plot_map()
 	}
 	i = 0;
 	draw_grid();
-	while (i < g_elems.height)
+	while (g_elems.map[i])
 	{
 		int j = 0;
-		while (g_elems.map[i][j] != '\0')
+		while (g_elems.map[i][j])
 		{
 			if(g_elems.map[i][j] == '1')
-				draw_square(BLUE, SQUAR_SIZE * j, SQUAR_SIZE * i);
+				draw_square(BLUE, (SQUAR_SIZE) * j, (SQUAR_SIZE) * i);
 			else if (g_elems.map[i][j] != ' ')
-				draw_square(GRAY, SQUAR_SIZE * j, SQUAR_SIZE * i);
+				draw_square(GRAY, (SQUAR_SIZE) * j, (SQUAR_SIZE) * i);
 			j++;
 		}
 		i++;
 	}
+}
+
+void normalize_angle(double angle)
+{
+	if (angle < 0)
+		angle += 2 * M_PI;
+	if (angle >= 2 * M_PI)
+    	angle -= 2 * M_PI;
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
 }
 
 void DDA(int x0, int y0, int x1, int y1, uint32_t color)
@@ -107,15 +114,20 @@ void DDA(int x0, int y0, int x1, int y1, uint32_t color)
     norm.y = y0;
 	norm.x_step = (float)norm.dx / steps;
 	norm.y_step = (float)norm.dy / steps;
-
 	int i = 0;
 	while (i <= steps)
 	{
 		int xx = round(norm.x);
 		int yy = round(norm.y);
 		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] != '1')
+		{
 			mlx_put_pixel(image, round(norm.x), round(norm.y), color);
-		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] == '1')
+		}
+		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
+			|| g_elems.map[(yy + 1)/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
+			|| g_elems.map[(yy - 1)/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
+			|| g_elems.map[yy/SQUAR_SIZE][(xx + 1)/SQUAR_SIZE] == '1' 
+			|| g_elems.map[yy/SQUAR_SIZE][(xx - 1)/SQUAR_SIZE] == '1')
 			break;
 		norm.x = norm.x + norm.x_step;
 		norm.y = norm.y + norm.y_step;
@@ -123,34 +135,50 @@ void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 	}
 }
 
+int in_map_pixel(int x, int y)
+{
+	int new_x = x/SQUAR_SIZE;
+	int new_y = y/SQUAR_SIZE;
+
+	int i = 0;
+	while (i < g_elems.width)
+	{
+		int j = 0;
+		while (j < g_elems.height)
+		{
+			if (i == new_x && j == new_y)
+				return 1;
+			j++;
+		}
+		i++;
+	}
+	return 0;
+}
+
 void creat_ray(float x, float y, double ray_angle)
 {
 	float new_x = cos(ray_angle)*g_elems.width*SQUAR_SIZE;//
 	float new_y = sin(ray_angle)*g_elems.height*SQUAR_SIZE;//
 	DDA(x, y, x + new_x, y + new_y, CYAN);
-	
 }
 
-void cast_one_ray(float x, float y, double ray_angle)
-{
+// void cast_one_ray(float x, float y, double ray_angle)
+// {
 	
-}
+// }
 
 void	cast_rays(float x, float y)
 {
-	// int ray_id = 0;
 	double ray_angle = g_elems.player_angle - FOV_ANGLE/2;
-
 	int i = 0;
 	while (i < RAYS_NUM)
 	{
 		creat_ray(x, y, ray_angle);
-		cast_one_ray(x, y, ray_angle);
+		// cast_one_ray(x, y, ray_angle);
 		ray_angle = ray_angle + FOV_ANGLE/RAYS_NUM;
-		// ray_id++;
+		normalize_angle(ray_angle);
 		i++;
 	}
-	
 }
 
 void draw_line(float x, float y)
@@ -171,7 +199,7 @@ void draw_player(uint32_t color, float x, float y)
 	int pixel_x = x - radius;
 	cast_rays(x, y);
 	draw_line(x, y);
-	while (pixel_x <= x + radius)
+	while (pixel_x < x + radius)
     {
 		int pixel_y = y - radius;
         while (pixel_y <= y + radius)
@@ -182,6 +210,7 @@ void draw_player(uint32_t color, float x, float y)
         }
 		pixel_x++;
     }
+	(void)color;
 }
 
 void rotate_player()
@@ -200,23 +229,17 @@ void rotate_player()
 	}
 }
 
-void normalize_angle()
-{
-	if (g_elems.player_angle < 0)
-		g_elems.player_angle += 2 * M_PI;
-	if (g_elems.player_angle >= 2 * M_PI)
-    	g_elems.player_angle -= 2 * M_PI;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-}
-
 void update_check_plot_player(float x, float y)
 {
 	int move_speed;
-	move_speed = 5;
+	move_speed = 3;
 	float new_x = x * move_speed;
 	float new_y = y * move_speed;
-	if(g_elems.map[(int)(g_elems.pos_y_p + new_y)/SQUAR_SIZE][(int)(g_elems.pos_x_p + new_x)/SQUAR_SIZE] != '1')
+	if(g_elems.map[(int)(g_elems.pos_y_p + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p + new_x)/(SQUAR_SIZE)] != '1' 
+		&& g_elems.map[(int)(g_elems.pos_y_p - move_speed + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p + new_x)/(SQUAR_SIZE)] != '1'
+		&& g_elems.map[(int)(g_elems.pos_y_p + move_speed + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p + new_x)/(SQUAR_SIZE)] != '1'
+		&& g_elems.map[(int)(g_elems.pos_y_p + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p  - move_speed + new_x)/(SQUAR_SIZE)] != '1'
+		&& g_elems.map[(int)(g_elems.pos_y_p + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p - move_speed + new_x)/(SQUAR_SIZE)] != '1')
 		draw_player(BLUE, new_x, new_y);
 	else
 		draw_player(BLUE, 0, 0);
@@ -224,7 +247,7 @@ void update_check_plot_player(float x, float y)
 
 void keyhook()
 {
-	normalize_angle();
+	normalize_angle(g_elems.player_angle);
 	rotate_player();
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 	{

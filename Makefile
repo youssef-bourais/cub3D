@@ -1,6 +1,6 @@
 NAME = cub3D
 
-FLAGS = #-Wall -Wextra -Werror #-fsanitize=address -g
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
 CC = cc
 
