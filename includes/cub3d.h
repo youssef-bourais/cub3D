@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 13:19:42 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:25:34 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define SQUAR_SIZE 25
 # define PLAYER_SIZE 8
 # define RAY_WIDTH 5
-# define RAYS_NUM (2050/RAY_WIDTH)
+# define RAYS_NUM (1025/RAY_WIDTH)
 # define FOV_ANGLE (60*(M_PI/180))
 
 #define WHITE 0xFFFFFFFF
@@ -49,7 +49,6 @@
 #define CYAN 0x00FFFFFF
 #define GRAY 0x808080FF
 #define BROWN 0xA52A2AFF
-
 
 mlx_t* mlx;
 static	mlx_image_t* image;
@@ -76,7 +75,6 @@ typedef struct s_elems
 	int		f_color[3];
 	int		c_color[3];
 }	t_elems;
-
 t_elems g_elems;
 
 typedef struct s_norm

@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 13:19:06 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:24:55 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void normalize_angle(double angle)
 		mlx_close_window(mlx);
 }
 
-void DDA(float x0, float y0, float x1, float y1, uint32_t color)
+void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 {
 	t_norm norm;
     norm.dx = x1 - x0;
@@ -157,8 +157,8 @@ int in_map_pixel(int x, int y)
 
 void creat_ray(float x, float y, double ray_angle)
 {
-	float new_x = cos(ray_angle)*500;//
-	float new_y = sin(ray_angle)*500;//
+	float new_x = cos(ray_angle)*200;//
+	float new_y = sin(ray_angle)*200;//
 	DDA(x, y, x + new_x, y + new_y, CYAN);
 }
 
