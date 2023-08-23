@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 13:25:34 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:49:59 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@
 # define WIDTH 2050
 # define HEIGHT 750
 
-# define SQUAR_SIZE 25
-# define PLAYER_SIZE 8
-# define RAY_WIDTH 5
-# define RAYS_NUM (1025/RAY_WIDTH)
-# define FOV_ANGLE (60*(M_PI/180))
+# define SQUAR_SIZE 50
+# define PLAYER_SIZE 16
+# define RAY_WIDTH 1
+# define RAYS_NUM (WIDTH/RAY_WIDTH)
+# define TO_RADIAN (M_PI/(double)180)
+# define FOV_ANGLE (60*TO_RADIAN)
+
 
 #define WHITE 0xFFFFFFFF
 #define BLUE 0xFFFF
@@ -88,6 +90,12 @@ typedef struct s_norm
 	float y_step;
 	float slope;
 }	t_norm;
+
+typedef struct s_data
+{
+	float x_pixel;
+	float y_pixel;
+}	t_data;
 
 /*tools*/
 void init_player_a(char *p);

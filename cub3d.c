@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 13:24:55 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/23 17:15:17 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,13 @@ void plot_map()
 	}
 }
 
-void normalize_angle(double angle)
+double normalize_angle(double angle)
 {
 	if (angle < 0)
 		angle += 2 * M_PI;
 	if (angle >= 2 * M_PI)
     	angle -= 2 * M_PI;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
+	return angle;
 }
 
 void DDA(int x0, int y0, int x1, int y1, uint32_t color)
@@ -117,18 +116,18 @@ void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 	int i = 0;
 	while (i <= steps)
 	{
-		int xx = round(norm.x);
-		int yy = round(norm.y);
-		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] != '1')
-		{
+		// int xx = round(norm.x);
+		// int yy = round(norm.y);
+		// if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] != '1')
+		// {
 			mlx_put_pixel(image, round(norm.x), round(norm.y), color);
-		}
-		if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
-			|| g_elems.map[(yy + 1)/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
-			|| g_elems.map[(yy - 1)/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
-			|| g_elems.map[yy/SQUAR_SIZE][(xx + 1)/SQUAR_SIZE] == '1' 
-			|| g_elems.map[yy/SQUAR_SIZE][(xx - 1)/SQUAR_SIZE] == '1')
-			break;
+		// }
+		// if(g_elems.map[yy/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
+		// 	|| g_elems.map[(yy + 1)/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
+		// 	|| g_elems.map[(yy - 1)/SQUAR_SIZE][xx/SQUAR_SIZE] == '1' 
+		// 	|| g_elems.map[yy/SQUAR_SIZE][(xx + 1)/SQUAR_SIZE] == '1' 
+		// 	|| g_elems.map[yy/SQUAR_SIZE][(xx - 1)/SQUAR_SIZE] == '1')
+		// 	break;
 		norm.x = norm.x + norm.x_step;
 		norm.y = norm.y + norm.y_step;
 		i++;
@@ -155,30 +154,298 @@ int in_map_pixel(int x, int y)
 	return 0;
 }
 
-void creat_ray(float x, float y, double ray_angle)
-{
-	float new_x = cos(ray_angle)*200;//
-	float new_y = sin(ray_angle)*200;//
-	DDA(x, y, x + new_x, y + new_y, CYAN);
-}
-
-// void cast_one_ray(float x, float y, double ray_angle)
+// void find_h_intersection_up_right(double ray_angle, float *x, float *y)
 // {
-	
+// 	float new_x;
+// 	float new_y;
+// 	if(ray_angle == 3*M_PI/2)
+// 		ray_angle += ray_angle + 1*TO_RADIAN;
+
+// 	new_y = (floor(g_elems.pos_y_p/SQUAR_SIZE))*SQUAR_SIZE;
+// 	new_x = g_elems.pos_x_p + ((g_elems.pos_y_p - new_y)/(tan(ray_angle)));
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_x += new_y/tan(ray_angle);
+// 		new_y -= SQUAR_SIZE;
+// 	}
 // }
 
-void	cast_rays(float x, float y)
+// void find_h_intersection_down_left(double ray_angle, float *x, float *y)
+// {
+// 	float new_x;
+// 	float new_y;
+
+// 	new_y = (floor(g_elems.pos_y_p/SQUAR_SIZE) + 1)*SQUAR_SIZE;
+// 	new_x = g_elems.pos_x_p - ((g_elems.pos_y_p - new_y)/(tan(ray_angle)));
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_x -= new_y/tan(ray_angle);
+// 		new_y += SQUAR_SIZE;
+// 	}
+// }
+
+// void find_h_intersection_down_right(double ray_angle, float *x, float *y)
+// {
+// 	float new_x;
+// 	float new_y;
+	
+// 	if(ray_angle == M_PI/2)
+// 		ray_angle += ray_angle + 1*TO_RADIAN;
+// 	new_y = (floor(g_elems.pos_y_p/SQUAR_SIZE) + 1)*SQUAR_SIZE;
+// 	new_x = g_elems.pos_x_p + ((g_elems.pos_y_p - new_y)/(tan(ray_angle)));
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_y += SQUAR_SIZE;
+// 		new_x += new_y/tan(ray_angle);
+// 	}
+// }
+
+// void find_v_intersection_up_right(double ray_angle, float *x, float *y)
+// {
+// 	float new_x;
+// 	float new_y;
+// 	if(ray_angle == 3*M_PI/2)
+// 		ray_angle += ray_angle + 1*TO_RADIAN;
+
+// 	new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE) + 1)*SQUAR_SIZE;
+// 	new_y = g_elems.player_y - (new_x - g_elems.pos_x_p)*tan(ray_angle);
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_x += SQUAR_SIZE;
+// 		new_y -= new_x*tan(ray_angle);
+// 	}
+// }
+
+// void find_v_intersection_up_left(double ray_angle, float *x, float *y)
+// {
+// 	float new_x;
+// 	float new_y;
+
+// 	new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE;
+// 	new_y = g_elems.player_y - (-new_x + g_elems.pos_x_p)*tan(ray_angle);
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_y -= new_x*tan(ray_angle);
+// 		new_x -= SQUAR_SIZE;
+// 	}
+// }
+
+// void find_v_intersection_down_left(double ray_angle, float *x, float *y)
+// {
+// 	float new_x;
+// 	float new_y;
+
+// 	new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE;
+// 	new_y = g_elems.player_y + (-new_x + g_elems.pos_x_p)/tan(ray_angle);
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_y += new_x*tan(ray_angle);
+// 		new_x -= SQUAR_SIZE;
+// 	}
+// }
+
+// void find_v_intersection_up_right(double ray_angle, float *x, float *y)
+// {
+// 	float new_x;
+// 	float new_y;
+// 	if(ray_angle == M_PI/2)
+// 		ray_angle += ray_angle - 1*TO_RADIAN;
+		
+// 	new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE;
+// 	new_y = g_elems.player_y - (new_x - g_elems.pos_x_p)*tan(ray_angle);
+
+// 	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+// 	{
+// 		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = new_x;
+// 			*y = new_y;
+// 			break;
+// 		}
+// 		new_x -= SQUAR_SIZE;
+// 		new_y -= new_x*tan(ray_angle);
+// 	}
+// }
+
+// void find_vertical_intersection(double ray_angle, float *x, float *y)
+// {
+// 	if(g_elems.player_angle >= 0 && g_elems.player_angle < M_PI/2)
+// 	{
+// 		find_v_intersection_down_right(ray_angle, &x, &y);
+// 	}
+// 	if(g_elems.player_angle >= M_PI/2 && g_elems.player_angle < M_PI)
+// 	{	
+// 		find_v_intersection_down_left(ray_angle, &x, &y);
+// 	}
+// 	if(g_elems.player_angle >= M_PI && g_elems.player_angle < 3*M_PI/2)
+// 	{
+// 		find_v_intersection_up_left(ray_angle, &x, &y);
+// 	}
+// 	if(g_elems.player_angle >= 3*M_PI/2 && g_elems.player_angle < 2*M_PI)
+// 	{
+// 		find_v_intersection_up_right(ray_angle, &x, &y);
+// 	}
+// }
+t_data compare_distance(float x_v, float y_v, float x_h, float y_h)
+{
+	t_data short_coordinate;
+	// d=√((x2 – x1)² + (y2 – y1)²)
+	float distance_1 = sqrt(pow(x_v - g_elems.player_x, 2) + pow(y_v - g_elems.player_y, 2));
+	float distance_2 = sqrt(pow(x_h - g_elems.player_x, 2) + pow(y_h - g_elems.player_y, 2));
+	if(distance_1 >= distance_2)
+	{
+		short_coordinate.x_pixel = x_h;
+		short_coordinate.y_pixel = y_h;
+	}
+	else
+	{
+		short_coordinate.x_pixel = x_v;
+		short_coordinate.y_pixel = y_v;
+	}
+	return short_coordinate;
+}
+
+void find_h_intersection_up_left(double ray_angle, float **x, float **y)
+{
+	float new_x;
+	float new_y;
+
+	new_y = (floor(g_elems.pos_y_p/SQUAR_SIZE))*SQUAR_SIZE;
+	new_x = g_elems.pos_x_p - ((g_elems.pos_y_p - new_y)/(tan(ray_angle)));
+
+	while(in_map_pixel((int)(new_x/SQUAR_SIZE), (int)(new_y/SQUAR_SIZE)))
+	{
+		if((int)(new_y/SQUAR_SIZE) >= 0 && (int)(new_x/SQUAR_SIZE) >= 0 && g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] == '1')
+		{
+			**x = new_x;
+			**y = new_y;
+			break;
+		}
+		new_x -= new_y/tan(ray_angle);
+		new_y -= SQUAR_SIZE;
+	}
+	// float new_y = floor(g_elems.pos_y_p/SQUAR_SIZE)*SQUAR_SIZE;
+	// float new_x = g_elems.pos_x_p - (g_elems.pos_y_p - new_y)/tan(ray_angle);
+
+	// while (g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] != '1')
+	// {
+	// 	// printf("%d %d\n", (int)(new_y/SQUAR_SIZE), (int)(new_x/SQUAR_SIZE));
+	// 	new_y -= SQUAR_SIZE;
+	// 	new_x -= new_y/tan(ray_angle);
+	// 	// new_x = g_elems.pos_x_p - (g_elems.pos_y_p - new_y)/tan(ray_angle);
+	// }
+	// new_y += SQUAR_SIZE;
+	// new_x -= new_y/tan(ray_angle);
+	// **x = new_x;
+	// **y = new_y;
+}
+
+void find_horizontal_intersection(double ray_angle, float *x, float *y)
+{
+	if(ray_angle >= M_PI && ray_angle < 3*M_PI/2)
+	{
+		find_h_intersection_up_left(ray_angle, &x, &y);
+	}
+	// if(ray_angle >= 0 && ray_angle < M_PI/2)
+	// {
+	// 	find_h_intersection_down_right(ray_angle, &x, &y);
+	// }
+	// if(ray_angle >= M_PI/2 && ray_angle < M_PI)
+	// {	
+	// 	find_h_intersection_down_left(ray_angle, &x, &y);
+	// }
+	// if(ray_angle >= 3*M_PI/2 && ray_angle < 2*M_PI)
+	// {
+	// 	find_h_intersection_up_right(ray_angle, &x, &y);
+	// }
+}
+
+void creat_ray(double ray_angle)
+{
+	t_data horizontal;
+	horizontal.x_pixel = 0;
+	horizontal.y_pixel = 0;
+
+	t_data vertical;
+	vertical.x_pixel = 0;
+	vertical.y_pixel = 0;
+
+	// t_data short_distance;
+	// short_distance.x_pixel = 0;
+	// short_distance.y_pixel = 0;
+	find_horizontal_intersection(ray_angle, &horizontal.x_pixel, &horizontal.y_pixel);
+	// find_vertical_intersection(ray_angle, &vertical.x_pixel, &vertical.y_pixel);
+
+	// short_distance = compare_distance(vertical.x_pixel, vertical.y_pixel, horizontal.x_pixel, horizontal.y_pixel);
+	DDA(g_elems.pos_x_p, g_elems.pos_y_p, horizontal.x_pixel, horizontal.y_pixel, CYAN);
+
+	// float new_y = floor(g_elems.pos_y_p/SQUAR_SIZE)*SQUAR_SIZE;
+	// float new_x = g_elems.pos_x_p - (g_elems.pos_y_p - new_y)/tan(ray_angle);
+	// while (g_elems.map[(int)(new_y/SQUAR_SIZE)][(int)(new_x/SQUAR_SIZE)] != '1')
+	// {
+	// 	new_y -= SQUAR_SIZE;
+	// 	new_x -= new_y/tan(ray_angle);
+	// }
+	// new_y += SQUAR_SIZE;
+	// new_x += new_y/tan(ray_angle);
+	// DDA(g_elems.pos_x_p, g_elems.pos_y_p, new_x, new_y, CYAN);
+	// new_y -= SQUAR_SIZE;
+	// new_x -= SQUAR_SIZE/tan(ray_angle);
+}
+
+void	cast_rays()
 {
 	double ray_angle = g_elems.player_angle - (FOV_ANGLE/2);
-	int i = 0;
-	while (i < RAYS_NUM)
-	{
-		creat_ray(x, y, ray_angle);
-		// cast_one_ray(x, y, ray_angle);
-		ray_angle = ray_angle + (FOV_ANGLE/RAYS_NUM);
-		// normalize_angle(ray_angle);
-		i++;
-	}
+	// int i = 0;
+	// while (i < RAYS_NUM)
+	// {
+		creat_ray(ray_angle);
+	// 	ray_angle = normalize_angle(ray_angle);
+	// 	ray_angle = ray_angle + (-FOV_ANGLE/RAYS_NUM);
+	// 	i++;
+	// }
 }
 
 void draw_line(float x, float y)
@@ -197,7 +464,7 @@ void draw_player(uint32_t color, float x, float y)
 
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
-	cast_rays(x, y);
+	cast_rays();
 	draw_line(x, y);
 	while (pixel_x < x + radius)
     {
@@ -215,15 +482,17 @@ void draw_player(uint32_t color, float x, float y)
 
 void rotate_player()
 {
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
-		g_elems.player_angle = g_elems.player_angle - 3*M_PI/(double)180;
+		g_elems.player_angle = g_elems.player_angle - 3*TO_RADIAN;
 		plot_map();
 		draw_player(BLUE, 0, 0);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		g_elems.player_angle = g_elems.player_angle + 3*M_PI/(double)180;
+		g_elems.player_angle = g_elems.player_angle + 3*TO_RADIAN;
 		plot_map();
 		draw_player(BLUE, 0, 0);
 	}
@@ -247,7 +516,7 @@ void update_check_plot_player(float x, float y)
 
 void keyhook()
 {
-	normalize_angle(g_elems.player_angle);
+	g_elems.player_angle = normalize_angle(g_elems.player_angle);
 	rotate_player();
 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 	{
@@ -279,7 +548,6 @@ int	main(int ac, char **av)
 	checks();
 	plot_map();
 	draw_player(BLUE, 0, 0);
-	printf("%d %d \n",g_elems.width*SQUAR_SIZE, g_elems.height*SQUAR_SIZE);
 	mlx_loop_hook(mlx, keyhook, NULL);
 	mlx_loop(mlx);
 }
