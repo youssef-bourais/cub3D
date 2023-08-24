@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/23 19:38:05 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:53:15 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,26 +176,21 @@ t_data compare_distance(float x_v, float y_v, float x_h, float y_h)
 
 void find_horizontal_intersection(double ray_angle, float *x, float *y)
 {
-	bool ray_up = false;
-	bool ray_right = false;
-	if(ray_angle >= M_PI && ray_angle < 2*M_PI)
-		ray_up = true;
-	if(ray_angle >= 3*M_PI/2 || ray_angle < M_PI/2)
-		ray_right = true;
+	// t_direction h;
+	int ray_up = ray_angle >= M_PI && ray_angle < 2*M_PI;
+	int ray_right = ray_angle >= 3*M_PI/2 || ray_angle < M_PI/2;
 
 	float new_x;
 	float new_y;
 	if(!ray_up)
-		new_y = (floor(g_elems.pos_y_p/SQUAR_SIZE))*SQUAR_SIZE + SQUAR_SIZE;
+		new_y = ((int)(g_elems.pos_y_p/SQUAR_SIZE) + 1)*SQUAR_SIZE;
 	else
-		new_y = (floor(g_elems.pos_y_p/SQUAR_SIZE))*SQUAR_SIZE;
-	new_x = g_elems.pos_x_p + ((g_elems.pos_y_p - new_y)/(tan(ray_angle)));
+		new_y = ((int)(g_elems.pos_y_p/SQUAR_SIZE))*SQUAR_SIZE;
+	new_x = g_elems.pos_x_p - ((g_elems.pos_y_p - new_y)/(tan(ray_angle)));
 
 	float delta_y = SQUAR_SIZE;
 	if(ray_up)
 		delta_y *= -1;
-	else
-		delta_y *= 1;
 
 	float delta_x = SQUAR_SIZE/tan(ray_angle);
 
@@ -203,6 +198,7 @@ void find_horizontal_intersection(double ray_angle, float *x, float *y)
 		delta_x *= -1;
 	else
 		delta_x *= 1;
+
 	if(ray_right && delta_x < 0)
 		delta_x *= -1;
 	else
@@ -220,6 +216,7 @@ void find_horizontal_intersection(double ray_angle, float *x, float *y)
 		{
 			*x = next_x;
 			*y = next_y;
+			DDA(g_elems.pos_x_p, g_elems.pos_y_p, *x, *y, CYAN);
 			break;
 		}
 		next_y += delta_y;
@@ -227,58 +224,59 @@ void find_horizontal_intersection(double ray_angle, float *x, float *y)
 	}
 }
 
-void find_vertical_intersection(double ray_angle, float *x, float *y)
-{
-	bool ray_up = false;
-	bool ray_right = false;
-	if(ray_angle >= M_PI && ray_angle < 2*M_PI)
-		ray_up = true;
-	if(ray_angle >= 3*M_PI/2 || ray_angle < M_PI/2)
-		ray_right = true;
+// void find_vertical_intersection(double ray_angle, float *x, float *y)
+// {
+// 	bool ray_up = false;
+// 	bool ray_right = false;
 
-	float new_x;
-	float new_y;
-	if(ray_right)
-		new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE + SQUAR_SIZE;
-	else
-		new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE;
-	new_y = g_elems.pos_y_p + ((g_elems.pos_x_p - new_x)*(tan(ray_angle)));
+// 	if(ray_angle >= M_PI && ray_angle < 2*M_PI)
+// 		ray_up = true;
+// 	if(ray_angle >= 3*M_PI/2 || ray_angle < M_PI/2)
+// 		ray_right = true;
 
-	float delta_x = SQUAR_SIZE;
-	if(!ray_right)
-		delta_x *= -1;
-	else
-		delta_x *= 1;
+// 	float new_x;
+// 	float new_y;
+// 	if(ray_right)
+// 		new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE + SQUAR_SIZE;
+// 	else
+// 		new_x = (floor(g_elems.pos_x_p/SQUAR_SIZE))*SQUAR_SIZE;
+// 	new_y = g_elems.pos_y_p + ((g_elems.pos_x_p - new_x)*(tan(ray_angle)));
 
-	float delta_y = SQUAR_SIZE*tan(ray_angle);
+// 	float delta_x = SQUAR_SIZE;
+// 	if(!ray_right)
+// 		delta_x *= -1;
+// 	else
+// 		delta_x *= 1;
 
-	if(ray_up && delta_y > 0)
-		delta_x *= -1;
-	else
-		delta_x *= 1;
-	if(!ray_up && delta_y < 0)
-		delta_y *= -1;
-	else
-		delta_y *= 1;
+// 	float delta_y = SQUAR_SIZE*tan(ray_angle);
 
-	float next_x = new_x;
-	float next_y = new_y;
+// 	if(ray_up && delta_y > 0)
+// 		delta_x *= -1;
+// 	else
+// 		delta_x *= 1;
+// 	if(!ray_up && delta_y < 0)
+// 		delta_y *= -1;
+// 	else
+// 		delta_y *= 1;
 
-	if (!ray_right)
-		next_x--;
+// 	float next_x = new_x;
+// 	float next_y = new_y;
 
-	while(next_x >= 0 && next_x <= g_elems.width*SQUAR_SIZE && next_y >= 0 && next_y <= g_elems.height*SQUAR_SIZE)
-	{
-		if(g_elems.map[(int)((next_y)/SQUAR_SIZE)][(int)((next_x)/SQUAR_SIZE)] == '1')
-		{
-			*x = next_x;
-			*y = next_y;
-			break;
-		}
-		next_y += delta_y;
-		next_x += delta_x;
-	}
-}
+// 	if (!ray_right)
+// 		next_x--;
+
+// 	while(next_x >= 0 && next_x <= g_elems.width*SQUAR_SIZE && next_y >= 0 && next_y <= g_elems.height*SQUAR_SIZE)
+// 	{
+// 		if(g_elems.map[(int)((next_y)/SQUAR_SIZE)][(int)((next_x)/SQUAR_SIZE)] == '1')
+// 		{
+// 			*x = next_x;
+// 			*y = next_y;
+// 			break;
+// 		}
+// 		next_y += delta_y;
+// 		next_x += delta_x;
+// 	}
+// }
 
 void creat_ray(double ray_angle)
 {
@@ -294,10 +292,10 @@ void creat_ray(double ray_angle)
 	short_distance.x_pixel = 0;
 	short_distance.y_pixel = 0;
 	find_horizontal_intersection(ray_angle, &horizontal.x_pixel, &horizontal.y_pixel);
-	find_vertical_intersection(ray_angle, &vertical.x_pixel, &vertical.y_pixel);
+	// find_vertical_intersection(ray_angle, &vertical.x_pixel, &vertical.y_pixel);
 
-	short_distance = compare_distance(vertical.x_pixel, vertical.y_pixel, horizontal.x_pixel, horizontal.y_pixel);
-	DDA(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel, CYAN);
+	// short_distance = compare_distance(vertical.x_pixel, vertical.y_pixel, horizontal.x_pixel, horizontal.y_pixel);
+	// DDA(g_elems.pos_x_p, g_elems.pos_y_p, horizontal.x_pixel, horizontal.y_pixel, CYAN);
 }
 
 void	cast_rays()

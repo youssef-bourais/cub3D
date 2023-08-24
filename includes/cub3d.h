@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/23 19:38:59 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/24 11:23:15 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,14 @@ typedef struct s_data
 	float x_pixel;
 	float y_pixel;
 }	t_data;
+
+typedef struct s_direction
+{
+	int up;
+	int down;
+	int right;
+	int left;
+}	t_direction;
 
 /*tools*/
 void init_player_a(char *p);
