@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/25 15:41:16 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/26 00:40:34 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,25 @@ void	checks()
 		ft_err("Missing info : colors\n");
 }
 
+void print_line_distance()
+{
+	int i = 0;
+	while (i < RAYS_NUM)
+	{
+		printf("ray[%d]=%f\n", i, g_elems.ray_distante[i]);
+		i++;
+	}
+}
+
 int	main(int ac, char **av)
 {
 	if (ac != 2)
 		ft_err("Wrong number of arguments\n");
 	init_info(av[1]);
 	checks();
+	init_image();
+	plot_sky_and_land();
+	_2_to_3d();
 	plot_map();
 	draw_player(BLUE, 0, 0);
 	mlx_loop_hook(mlx, keyhook, NULL);

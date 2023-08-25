@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:25:35 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/21 12:29:36 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/25 20:38:27 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void init_player_a(char *p)
 void	init_info(char *file)
 {
 	g_elems.file = file;
+	g_elems.ray_distante = calloc(RAYS_NUM ,sizeof(float));
 	g_elems.fd = open(g_elems.file, O_RDONLY);
 	g_elems.ea = NULL;
 	g_elems.no = NULL;

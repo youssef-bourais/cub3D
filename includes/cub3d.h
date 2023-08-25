@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/25 16:21:00 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/26 00:52:10 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@
 # define TO_RADIAN (M_PI/(double)180)
 # define FOV_ANGLE (60*TO_RADIAN)
 
+#define DARK_BLUE ((BLUE & 0xFF0000) >> 1) + ((BLUE & 0x00FF00) >> 1) + ((BLUE & 0x0000FF) >> 1)
+#define DARK_ORANGE 0xCC7F00FF
+#define DARK_GREEN 0x005500FF
 
 #define WHITE 0xFFFFFFFF
 #define BLUE 0xFFFF
@@ -74,6 +77,7 @@ typedef struct s_elems
 	int		ceiling;
 	float	pos_x_p;
 	float	pos_y_p;
+	float	*ray_distante;
 	int		f_color[3];
 	int		c_color[3];
 }	t_elems;
@@ -115,14 +119,17 @@ typedef struct s_direction
 	int left;
 }	t_direction;
 
-
-
+void welcome();
+void init_image();
+void plot_sky_and_land();
+void _2d_to_3d(float distance, int id);
+void _2_to_3d();
 /*========================================*/
 /*===============ray_casting==============*/
 /*========================================*/
 /*ray_casting*/
 void	cast_rays();
-void creat_ray(double ray_angle);
+void creat_ray(double ray_angle, float *dst);
 float distance(float x1, float y1, float x2, float y2);
 t_data compare_distance(float x_v, float y_v, float x_h, float y_h);
 int	in_map_pixel(float x, float y);

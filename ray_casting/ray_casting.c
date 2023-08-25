@@ -6,26 +6,29 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:22:34 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/25 11:32:51 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/25 20:40:39 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+
 void	cast_rays()
 {
 	double ray_angle = g_elems.player_angle - (FOV_ANGLE/2);
 	int i = 0;
+	float distance;
 	while (i < RAYS_NUM)
 	{
 		ray_angle = normalize_angle(ray_angle);
-		creat_ray(ray_angle);
+		creat_ray(ray_angle, &distance);
+		g_elems.ray_distante[i] = distance;
 		ray_angle = ray_angle + (FOV_ANGLE/RAYS_NUM);
 		i++;
 	}
 }
 
-void creat_ray(double ray_angle)
+void creat_ray(double ray_angle, float *dst)
 {
 	t_data horizontal;
 	horizontal.x_pixel = 0;
@@ -41,6 +44,7 @@ void creat_ray(double ray_angle)
 	find_horizontal_intersection(ray_angle, &horizontal.x_pixel, &horizontal.y_pixel);
 	find_vertical_intersection(ray_angle, &vertical.x_pixel, &vertical.y_pixel);
 	short_distance = compare_distance(vertical.x_pixel, vertical.y_pixel, horizontal.x_pixel, horizontal.y_pixel);
+	*dst = distance(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel);
 	DDA(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel, CYAN);
 }
 

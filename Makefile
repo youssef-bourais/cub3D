@@ -1,6 +1,6 @@
 NAME = cub3D
 
-FLAGS =  -fsanitize=address -g
+FLAGS =  -O3 -Ofast#-fsanitize=address -g
 
 CC = cc
 
