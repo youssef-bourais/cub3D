@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/24 16:29:14 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/25 15:13:54 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 # define SQUAR_SIZE 50
 # define PLAYER_SIZE 16
-# define RAY_WIDTH 1
+# define RAY_WIDTH 4
 # define RAYS_NUM (WIDTH/RAY_WIDTH)
 # define TO_RADIAN (M_PI/(double)180)
 # define FOV_ANGLE (60*TO_RADIAN)
@@ -79,6 +79,16 @@ typedef struct s_elems
 }	t_elems;
 t_elems g_elems;
 
+typedef struct s_coordinate
+{
+	int ray_up;
+	int ray_right;
+	float n_x;
+	float n_y;
+	float delta_y;
+	float delta_x;
+}	t_coordinate;
+
 typedef struct s_norm
 {
 	int dx;
@@ -104,6 +114,52 @@ typedef struct s_direction
 	int right;
 	int left;
 }	t_direction;
+
+
+
+/*========================================*/
+/*===============ray_casting==============*/
+/*========================================*/
+/*ray_casting*/
+void	cast_rays();
+void creat_ray(double ray_angle);
+float distance(float x1, float y1, float x2, float y2);
+t_data compare_distance(float x_v, float y_v, float x_h, float y_h);
+int	in_map_pixel(float x, float y);
+/*cast_horizontal_lines*/
+void init_direction(int *ray_up, int *ray_right, double ray_angle);
+void init_horizontal_coordinate(float *x, float *y, double ray_angle, int ray_up);
+void init_horizontal_steps(float *delta_x, float *delta_y, double ray_angle);
+void find_horizontal_intersection(double ray_angle, float *x, float *y);
+/*cast_vertical_lines*/
+void init_vertical_coordinate(float *x, float *y, double ray_angle, int ray_right);
+void init_vertical_steps(float *delta_x, float *delta_y, double ray_angle);
+void find_vertical_intersection(double ray_angle, float *x, float *y);
+
+
+/*=====================================*/
+/*===============key_hook==============*/
+/*=====================================*/
+/*move_and_rotate*/
+void rotate_player();
+void update_check_plot_player(float x, float y);
+void keyhook();
+double normalize_angle(double angle);
+
+
+
+/*=====================================*/
+/*===============plot==================*/
+/*=====================================*/
+/*map_and_player*/
+
+void draw_player(uint32_t color, float x, float y);
+/*plotting_tools*/
+void draw_square(uint32_t color, int x, int y);
+void draw_grid();
+void draw_line(float x, float y);
+void DDA(int x0, int y0, int x1, int y1, uint32_t color);
+void plot_map();
 
 /*tools*/
 void init_player_a(char *p);
