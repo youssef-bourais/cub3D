@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/25 15:38:16 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/25 16:06:10 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 		i++;
 	}
 }
+
 void plot_map()
 {
 	int i = 0;
@@ -103,7 +104,7 @@ void plot_map()
 
 	if(b == 0)
 	{
-		mlx = mlx_init(SQUAR_SIZE * g_elems.width, SQUAR_SIZE * g_elems.height, "GAME", 0);
+		mlx = mlx_init(WIDTH, HEIGHT, "GAME", 0);
 		image = mlx_new_image(mlx, SQUAR_SIZE * g_elems.width, SQUAR_SIZE * g_elems.height);
 		mlx_image_to_window(mlx, image, 0, 0);
 		b++;

@@ -23,7 +23,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS) Makefile
 		$(CC) $(FLAGS) -o $(NAME) $(SRS) $(DEPENDENCIES) -lglfw -L"$(glfw)/lib" $(mlx_lib)
-# $(CC) $(FLAGS) -o $(NAME) $(SRS)
+
 clean:
 	rm -f $(OBJS)
 

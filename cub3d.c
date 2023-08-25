@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/25 14:26:20 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/25 15:41:16 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	checks()
 	if (g_elems.ceiling != 1 || g_elems.floor != 1)
 		ft_err("Missing info : colors\n");
 }
-
 
 int	main(int ac, char **av)
 {

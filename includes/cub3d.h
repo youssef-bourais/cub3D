@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/25 15:13:54 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/25 16:21:00 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 29
+#  define BUFFER_SIZE 310
 # endif
 
 # include "../MLX42/MLX42.h"
@@ -30,9 +30,9 @@
 # define WIDTH 2050
 # define HEIGHT 750
 
-# define SQUAR_SIZE 50
-# define PLAYER_SIZE 16
-# define RAY_WIDTH 4
+# define SQUAR_SIZE 10
+# define PLAYER_SIZE 4
+# define RAY_WIDTH 1
 # define RAYS_NUM (WIDTH/RAY_WIDTH)
 # define TO_RADIAN (M_PI/(double)180)
 # define FOV_ANGLE (60*TO_RADIAN)
@@ -147,12 +147,10 @@ void keyhook();
 double normalize_angle(double angle);
 
 
-
 /*=====================================*/
 /*===============plot==================*/
 /*=====================================*/
 /*map_and_player*/
-
 void draw_player(uint32_t color, float x, float y);
 /*plotting_tools*/
 void draw_square(uint32_t color, int x, int y);

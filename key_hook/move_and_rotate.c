@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   move_player.c                                      :+:      :+:    :+:   */
+/*   move_and_rotate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:17:00 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/25 11:33:14 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/25 16:17:47 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void rotate_player()
 
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
 	{
-		g_elems.player_angle = g_elems.player_angle - 2*TO_RADIAN;
+		g_elems.player_angle = g_elems.player_angle - (2)*TO_RADIAN;
 		g_elems.player_angle = normalize_angle(g_elems.player_angle);
 		plot_map();
 		draw_player(RED, 0, 0);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 	{
-		g_elems.player_angle = g_elems.player_angle + 2*TO_RADIAN;
+		g_elems.player_angle = g_elems.player_angle + (2)*TO_RADIAN;
 		g_elems.player_angle = normalize_angle(g_elems.player_angle);
 		plot_map();
 		draw_player(RED, 0, 0);
@@ -35,8 +35,8 @@ void rotate_player()
 
 void update_check_plot_player(float x, float y)
 {
-	int move_speed;
-	move_speed = 3;
+	float move_speed;
+	move_speed = 1;
 	float new_x = x * move_speed;
 	float new_y = y * move_speed;
 	if(g_elems.map[(int)(g_elems.pos_y_p + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p + new_x)/(SQUAR_SIZE)] != '1' 
