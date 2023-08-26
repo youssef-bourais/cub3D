@@ -1,6 +1,6 @@
 NAME = cub3D
 
-FLAGS =  -O3 -Ofast#-fsanitize=address -g
+FLAGS = -fsanitize=address -g #-Ofast -O3
 
 CC = cc
 
@@ -21,7 +21,7 @@ OBJS = $(SRS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) Makefile
+$(NAME): $(OBJS) Makefile includes/cub3d.h
 		$(CC) $(FLAGS) -o $(NAME) $(SRS) $(DEPENDENCIES) -lglfw -L"$(glfw)/lib" $(mlx_lib)
 
 clean:

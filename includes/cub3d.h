@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/26 00:52:10 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/26 14:18:35 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@
 # define TO_RADIAN (M_PI/(double)180)
 # define FOV_ANGLE (60*TO_RADIAN)
 
-#define DARK_BLUE ((BLUE & 0xFF0000) >> 1) + ((BLUE & 0x00FF00) >> 1) + ((BLUE & 0x0000FF) >> 1)
-#define DARK_ORANGE 0xCC7F00FF
-#define DARK_GREEN 0x005500FF
+#define DARK_BLUE 191970
+#define DARK_ORANGE 0x483C32
+#define DARK_GREEN 0x3e00ed
 
 #define WHITE 0xFFFFFFFF
 #define BLUE 0xFFFF

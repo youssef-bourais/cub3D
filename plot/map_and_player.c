@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/26 00:51:50 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/26 19:10:45 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void draw_square(uint32_t color, int x, int y)
 		x++;
 	}
 }
+int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+{
+    return (r << 24 | g << 16 | b << 8 | a);
+}
 
 void draw_grid()
 {
@@ -45,52 +49,48 @@ void draw_grid()
     }
 }
 
-void welcome()
+void plot_sky_and_land()
 {
-	int y = 120;
-	while (y < HEIGHT - 120)
+	int i = 0;
+	while (i < HEIGHT)
 	{
-		int x = 0; // 50 = SQUARE_SIZE with map_height
-		// int k = HEIGHT - 50;
-		while(x < WIDTH)
+		int j = 0;
+		while (j < WIDTH)
 		{
-			// WELCOME
-			mlx_put_pixel(image, x, y, BLACK);
-			x++;
-			// k--;
+			if (i <= HEIGHT/2)
+				mlx_put_pixel(image, j, i, DARK_BLUE);
+			else
+				mlx_put_pixel(image, j, i, DARK_GREEN);
+			j++;
 		}
-		y++;
+		i++;
 	}
+}
+
+void get_y_coordinate(float *y0, float *y1, float ray_distance)
+{
+	float wall_height;
+	wall_height = SQUAR_SIZE*HEIGHT/ray_distance;
 	
+	*y0 = HEIGHT/2 - wall_height/2;
+	*y1 = *y0 + wall_height;
 }
 
 void _2_to_3d()
 {
-	float coefficient;
-	// float y_start = 120 + g_elems;
-	coefficient *= 1;
-	float y_end;
 	int x = 0;
-	float up_y = 0;;
-	float down_y = 0;
-
-	up_y = 120;
-	down_y = 510 + 120;
+	float y0;
+	float y1;
 	plot_sky_and_land();
 	while (x < WIDTH)
 	{
-		// DDA(x, 120, x, 510 + 120, YELLOW);	
-		DDA(x, up_y + g_elems.ray_distante[x], x, down_y - g_elems.ray_distante[x], ORANGE);	
-		// DDA(510, x, 510, x, YELLOW);	
-		// int x = 0; // 50 = SQUARE_SIZE with map_height
-		// int k = HEIGHT - 50;
-		// while(x < WIDTH)
-		// {
-		// print_line_distance();
-		// DDA();
-		// mlx_put_pixel(image, x, y, YELLOW);
-		// x++;
-		// k--;
+		get_y_coordinate(&y0, &y1, g_elems.ray_distante[x]);
+		if(y0 > HEIGHT || y1 > HEIGHT)
+		{
+			y0 = 0;
+			y1 = HEIGHT;
+		}
+		DDA(x, y0, x, y1, ORANGE);
 		x++;
 	}
 }
@@ -105,7 +105,7 @@ void draw_player(uint32_t color, float x, float y)
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
 	cast_rays();
-	// draw_line(x, y);
+	draw_line(x, y);
 	while (pixel_x < x + radius)
     {
 		int pixel_y = y - radius;
@@ -144,31 +144,18 @@ void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 	}
 }
 
-void plot_sky_and_land()
-{
-	int i = 0;
-	while (i < HEIGHT)
-	{
-		int j = 0;
-		while (j < WIDTH)
-		{
-			if (i <= HEIGHT/2)
-				mlx_put_pixel(image, j, i, BLUE);
-			else
-				mlx_put_pixel(image, j, i, GREEN);
-			j++;
-		}
-		i++;
-	}
-	
-}
 
 void init_image()
 {
+	// mlx = mlx_init((int)(g_elems.width*SQUAR_SIZE), (int)(g_elems.height*SQUAR_SIZE), "GAME", 0);
+	// image = mlx_new_image(mlx, g_elems.width*SQUAR_SIZE, g_elems.height*SQUAR_SIZE);
+	// mlx_image_to_window(mlx, image, 0, 0);
+
 	mlx = mlx_init(WIDTH, HEIGHT, "GAME", 0);
 	image = mlx_new_image(mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(mlx, image, 0, 0);
 }
+
 void plot_map()
 {
 	int i;
