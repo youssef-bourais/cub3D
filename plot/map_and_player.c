@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 17:11:36 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/28 20:34:19 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,6 @@ void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle
 	*y1 = *y0 + wall_height;
 	b++;
 }
-void put_textur(float x, float y0, float y1, double ray_angle)
-{
-	mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
-	// mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
-	// mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
-	// mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
-
-	// Convert texture to a displayable image
-	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
-}
-
 
 void _2_to_3d()
 {
@@ -125,17 +114,17 @@ void draw_player(uint32_t color, float x, float y)
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
 	cast_rays();
-	while (pixel_x < x + radius)
-    {
-		int pixel_y = y - radius;
-        while (pixel_y <= y + radius)
-        {
-            if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
-                mlx_put_pixel(image, pixel_x, pixel_y, color);
-			pixel_y++;
-        }
-		pixel_x++;
-    }
+	// while (pixel_x < x + radius)
+    // {
+	// 	int pixel_y = y - radius;
+    //     while (pixel_y <= y + radius)
+    //     {
+    //         if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
+    //             mlx_put_pixel(image, pixel_x, pixel_y, color);
+	// 		pixel_y++;
+    //     }
+	// 	pixel_x++;
+    // }
 }
 
 void DDA(int x0, int y0, int x1, int y1, uint32_t color)

@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/28 16:49:44 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/28 20:39:52 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define WIDTH 1775
 # define HEIGHT 1325
 
-# define SQUAR_SIZE 10
-# define PLAYER_SIZE 4
+# define SQUAR_SIZE 64
+# define PLAYER_SIZE 10
 # define RAY_WIDTH 1
 # define RAYS_NUM (WIDTH/RAY_WIDTH)
 # define TO_RADIAN (M_PI/(double)180)
@@ -73,6 +73,7 @@ typedef struct s_elems
 	char	*so;
 	char	*we;
 	char	*ea;
+	uint32_t *texture;
 	int		floor;
 	int		ceiling;
 	float	pos_x_p;
