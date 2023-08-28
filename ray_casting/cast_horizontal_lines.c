@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:21:41 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/25 11:33:00 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:07:54 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void init_horizontal_coordinate(float *x, float *y, double ray_angle, int ray_up
 		*y += SQUAR_SIZE;
 	*x = g_elems.pos_x_p - ((g_elems.pos_y_p - *y)/tan(ray_angle - M_PI));
 	if(ray_up)
-		(*y) --;
+		(*y) -= (float)1/HEIGHT;
 }
 
 void init_horizontal_steps(float *delta_x, float *delta_y, double ray_angle)
 {
 	*delta_x = SQUAR_SIZE/tan(ray_angle - M_PI);
-	*delta_y = SQUAR_SIZE;
+	*delta_y =  SQUAR_SIZE;
 }
 
 void find_horizontal_intersection(double ray_angle, float *x, float *y)

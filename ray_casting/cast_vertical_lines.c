@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:26:28 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/25 11:33:07 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:07:17 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void init_vertical_coordinate(float *x, float *y, double ray_angle, int ray_righ
 		*x += SQUAR_SIZE;
 	*y = g_elems.pos_y_p - ((g_elems.pos_x_p - *x)*tan(ray_angle));
 	if(!ray_right)
-		(*x)--;
+		(*x) -= (float)1/WIDTH;
 }
 
 void init_vertical_steps(float *delta_x, float *delta_y, double ray_angle)

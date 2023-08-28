@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/28 08:20:38 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:43:52 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <limits.h>
 # include <string.h>
 
-# define WIDTH 2050
-# define HEIGHT 720
+# define WIDTH 1775
+# define HEIGHT 1325
 
 # define SQUAR_SIZE 10
 # define PLAYER_SIZE 4

@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:22:34 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/25 20:40:39 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:46:06 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_data compare_distance(float x_v, float y_v, float x_h, float y_h)
 		vert_dis = distance(g_elems.pos_x_p, g_elems.pos_y_p, x_v, y_v);
 	else
 		vert_dis = INT_MAX;
-
 	if (horiz_dis < vert_dis)
 		return (t_data){x_h, y_h};
 	else

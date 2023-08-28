@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/26 20:37:52 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:31:43 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	main(int ac, char **av)
 	checks();
 	init_image();
 	plot_sky_and_land();
-	plot_map();
 	draw_player(BLUE, 0, 0);
 	mlx_loop_hook(mlx, keyhook, NULL);
 	mlx_loop(mlx);

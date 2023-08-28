@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 11:57:48 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 13:58:48 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void draw_square(uint32_t color, int x, int y)
 {
-	int size_x = x + SQUAR_SIZE - 1;
-	int size_y = y + SQUAR_SIZE - 1;
+	int size_x = x + SQUAR_SIZE;
+	int size_y = y + SQUAR_SIZE;
 	int firs_y = y;
 
 	while (x < size_x)
@@ -29,6 +29,7 @@ void draw_square(uint32_t color, int x, int y)
 		x++;
 	}
 }
+
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
@@ -72,8 +73,8 @@ void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle
 	int static b;
 	float wall_height;
 	
-	ray_distance = ray_distance*cos(ray_angle - g_elems.player_angle);
-	wall_height = SQUAR_SIZE*HEIGHT/ray_distance;
+	ray_distance = ray_distance*cos(g_elems.player_angle - ray_angle);
+	wall_height = (SQUAR_SIZE*HEIGHT)/ray_distance;
 
 	*y0 = HEIGHT/2 - wall_height/2;
 	*y1 = *y0 + wall_height;
@@ -92,7 +93,7 @@ void _2_to_3d()
 	while (x < WIDTH)
 	{
 		get_y_coordinate(&y0, &y1, g_elems.ray_distante[x], ray_angle);
-		if(y0 > HEIGHT || y1 > HEIGHT)
+		if(y0 > HEIGHT || y0 < 0 || y1 > HEIGHT || y1 < 0)
 		{
 			y0 = 0;
 			y1 = HEIGHT - 1;
@@ -113,7 +114,6 @@ void draw_player(uint32_t color, float x, float y)
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
 	cast_rays();
-	draw_line(x, y);
 	while (pixel_x < x + radius)
     {
 		int pixel_y = y - radius;
@@ -155,10 +155,6 @@ void DDA(int x0, int y0, int x1, int y1, uint32_t color)
 
 void init_image()
 {
-	// mlx = mlx_init((int)(g_elems.width*SQUAR_SIZE), (int)(g_elems.height*SQUAR_SIZE), "GAME", 0);
-	// image = mlx_new_image(mlx, g_elems.width*SQUAR_SIZE, g_elems.height*SQUAR_SIZE);
-	// mlx_image_to_window(mlx, image, 0, 0);
-
 	mlx = mlx_init(WIDTH, HEIGHT, "GAME", 0);
 	image = mlx_new_image(mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(mlx, image, 0, 0);
@@ -167,8 +163,7 @@ void init_image()
 void plot_map()
 {
 	int i;
-	
-	draw_grid();
+
 	i = 0;
 	while (g_elems.map[i])
 	{
