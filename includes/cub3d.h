@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/28 13:43:52 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 14:49:36 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,11 +119,11 @@ typedef struct s_direction
 	int left;
 }	t_direction;
 
-void welcome();
-void init_image();
-void plot_sky_and_land();
-void _2d_to_3d(float distance, int id);
-void _2_to_3d();
+void	width_height();
+void 	check_map_size();
+void 	init_image();
+void 	plot_sky_and_land();
+void 	_2_to_3d();
 /*========================================*/
 /*===============ray_casting==============*/
 /*========================================*/

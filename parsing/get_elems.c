@@ -153,7 +153,19 @@ int	is_all_wall(char *str)
 	}
 	return (0);
 }
+void	separated_map(char *one_line_map)
+{
+	int i;
 
+	i = 0;
+	while (one_line_map[i])
+	{
+		if (one_line_map[i] == '\n' && one_line_map[i + 1]
+			&& one_line_map[i + 1] == '\n')
+			ft_err("Invalid map\n");
+		i++;
+	}
+}
 void	get_game_info()
 {
 	char	*line;
@@ -178,10 +190,10 @@ void	get_game_info()
 		free(line);
 		line = get_next_line(g_elems.fd);
 	}
+	separated_map(one_line);
 	g_elems.map = ft_split(one_line, "\n");
 	if (!g_elems.map)
 		ft_err("Invalid map\n");
-	width_height();
 }
 
 int	is_map_comp(char c)
@@ -215,8 +227,6 @@ int	check_map()
 			{
 				if (g_elems.player)
 					ft_err("Duplicate player\n");
-				g_elems.player_x = j;
-				g_elems.player_y = i;
 				g_elems.pos_x_p = (j*SQUAR_SIZE) + SQUAR_SIZE/2;
 				g_elems.pos_y_p = (i*SQUAR_SIZE) + SQUAR_SIZE/2;
 				g_elems.player = ft_substr(g_elems.map[i], j, 1);
