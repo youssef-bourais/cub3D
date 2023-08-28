@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/28 14:49:36 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/28 16:49:44 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_elems
 	float	pos_x_p;
 	float	pos_y_p;
 	float	*ray_distante;
+	int		*is_vertical;
 	int		f_color[3];
 	int		c_color[3];
 }	t_elems;
@@ -129,7 +130,7 @@ void 	_2_to_3d();
 /*========================================*/
 /*ray_casting*/
 void	cast_rays();
-void creat_ray(double ray_angle, float *dst);
+void creat_ray(double ray_angle, float *dst, int *is_vertical);
 float distance(float x1, float y1, float x2, float y2);
 t_data compare_distance(float x_v, float y_v, float x_h, float y_h);
 int	in_map_pixel(float x, float y);

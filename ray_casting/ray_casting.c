@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:22:34 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 12:46:06 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:50:25 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@ void	cast_rays()
 {
 	double ray_angle = g_elems.player_angle - (FOV_ANGLE/2);
 	int i = 0;
+	int is_vertical;
 	float distance;
 	while (i < RAYS_NUM)
 	{
 		ray_angle = normalize_angle(ray_angle);
-		creat_ray(ray_angle, &distance);
+		creat_ray(ray_angle, &distance, &is_vertical);
 		g_elems.ray_distante[i] = distance;
 		ray_angle = ray_angle + (FOV_ANGLE/RAYS_NUM);
 		i++;
 	}
 }
 
-void creat_ray(double ray_angle, float *dst)
+void creat_ray(double ray_angle, float *dst, int *is_vertical)
 {
 	t_data horizontal;
 	horizontal.x_pixel = 0;
@@ -44,6 +45,7 @@ void creat_ray(double ray_angle, float *dst)
 	find_horizontal_intersection(ray_angle, &horizontal.x_pixel, &horizontal.y_pixel);
 	find_vertical_intersection(ray_angle, &vertical.x_pixel, &vertical.y_pixel);
 	short_distance = compare_distance(vertical.x_pixel, vertical.y_pixel, horizontal.x_pixel, horizontal.y_pixel);
+	*is_vertical = (short_distance.x_pixel == vertical.x_pixel);
 	*dst = distance(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel);
 	DDA(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel, CYAN);
 }

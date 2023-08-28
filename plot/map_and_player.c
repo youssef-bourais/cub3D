@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_and_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 13:58:48 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:11:36 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,17 @@ void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle
 	*y1 = *y0 + wall_height;
 	b++;
 }
+void put_textur(float x, float y0, float y1, double ray_angle)
+{
+	mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
+	// mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
+	// mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
+	// mlx_texture_t* texture = mlx_load_png("./temp/sus.png");
+
+	// Convert texture to a displayable image
+	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
+}
+
 
 void _2_to_3d()
 {
