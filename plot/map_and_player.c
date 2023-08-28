@@ -6,7 +6,7 @@
 /*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/26 19:10:45 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:57:48 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,17 @@ void plot_sky_and_land()
 	}
 }
 
-void get_y_coordinate(float *y0, float *y1, float ray_distance)
+void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle)
 {
+	int static b;
 	float wall_height;
-	wall_height = SQUAR_SIZE*HEIGHT/ray_distance;
 	
+	ray_distance = ray_distance*cos(ray_angle - g_elems.player_angle);
+	wall_height = SQUAR_SIZE*HEIGHT/ray_distance;
+
 	*y0 = HEIGHT/2 - wall_height/2;
 	*y1 = *y0 + wall_height;
+	b++;
 }
 
 void _2_to_3d()
@@ -81,16 +85,20 @@ void _2_to_3d()
 	int x = 0;
 	float y0;
 	float y1;
+	double ray_angle;
+
 	plot_sky_and_land();
+	ray_angle = (g_elems.player_angle - 30*TO_RADIAN);
 	while (x < WIDTH)
 	{
-		get_y_coordinate(&y0, &y1, g_elems.ray_distante[x]);
+		get_y_coordinate(&y0, &y1, g_elems.ray_distante[x], ray_angle);
 		if(y0 > HEIGHT || y1 > HEIGHT)
 		{
 			y0 = 0;
-			y1 = HEIGHT;
+			y1 = HEIGHT - 1;
 		}
 		DDA(x, y0, x, y1, ORANGE);
+		ray_angle += (FOV_ANGLE/RAYS_NUM);
 		x++;
 	}
 }
