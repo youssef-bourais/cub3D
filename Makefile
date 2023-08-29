@@ -16,7 +16,9 @@ PARS = $(addprefix parsing/, get_elems.c  init_info.c ft_err.c map.c)
 RAY_CASTING = $(addprefix ray_casting/, ray_casting.c cast_horizontal_lines.c cast_vertical_lines.c)
 HOOK = $(addprefix key_hook/, move_and_rotate.c)
 PLOT = $(addprefix plot/, map_and_player.c plotting_tools.c)
-SRS = cub3d.c $(PARS) $(TOOLS) ${GNL} ${RAY_CASTING} ${HOOK} ${PLOT}
+TEXTURE = $(addprefix put_textures/, textures.c)
+
+SRS = cub3d.c $(PARS) $(TOOLS) ${GNL} ${RAY_CASTING} ${HOOK} ${PLOT} ${TEXTURE}
 OBJS = $(SRS:.c=.o)
 
 all: $(NAME)

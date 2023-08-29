@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:28:16 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:32:57 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@ void	checks()
 		ft_err("Missing info : player\n");
 	if (g_elems.ceiling != 1 || g_elems.floor != 1)
 		ft_err("Missing info : colors\n");
-}
-
-void print_line_distance()
-{
-	int i = 0;
-	while (i < RAYS_NUM)
-	{
-		printf("ray[%d]=%f\n", i, g_elems.ray_distante[i]);
-		i++;
-	}
 }
 
 int	main(int ac, char **av)

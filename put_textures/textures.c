@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:22:30 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:25:59 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:36:27 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void    get_txtr_pixels(uint8_t *pixels, int idx)
         i += 4;
     }
 }
+
 void get_texture()
 {
     int i;
@@ -47,4 +48,5 @@ void get_texture()
         get_txtr_pixels(texture[i]->pixels, i);
         i++;  
     }
+    exit(0);
 }
