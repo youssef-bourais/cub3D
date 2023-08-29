@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:22:30 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:52:12 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:54:34 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void    get_txtr_pixels(uint8_t *pixels, int idx)
     {
         g_elems.txtr[idx].texture[j] = ft_pixel(pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3]);
         i += 4;
+        j++;
     }
 }
 
