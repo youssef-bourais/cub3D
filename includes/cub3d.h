@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:26:59 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:41:56 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,11 @@ typedef struct s_direction
 	int left;
 }	t_direction;
 
+
+
+
+
+void get_texture();
 void	width_height();
 void 	check_map_size();
 void 	init_image();

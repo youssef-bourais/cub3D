@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/29 18:27:58 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:42:31 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,6 @@ void draw_square(uint32_t color, int x, int y)
 		}
 		x++;
 	}
-}
-
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void draw_grid()

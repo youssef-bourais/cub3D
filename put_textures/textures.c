@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:22:30 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:36:27 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:52:12 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int32_t ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 void    get_txtr_pixels(uint8_t *pixels, int idx)
 {
     int i;
+    int j;
 
     i = 0;
+    j = 0;
     g_elems.txtr[idx].texture = malloc(sizeof(uint32_t) * (g_elems.txtr[idx].width * g_elems.txtr[idx].height) / 4);
     while (i < g_elems.txtr[idx].width * g_elems.txtr[idx].height)
     {
-        g_elems.txtr[idx].texture[i] = ft_pixel(pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3]);
+        g_elems.txtr[idx].texture[j] = ft_pixel(pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3]);
         i += 4;
     }
 }
@@ -33,7 +35,7 @@ void    get_txtr_pixels(uint8_t *pixels, int idx)
 void get_texture()
 {
     int i;
-    mlx_image_t *texture[4];
+    mlx_texture_t *texture[4];
 
     texture[0] = mlx_load_png(g_elems.no);
     texture[1] = mlx_load_png(g_elems.so);
@@ -48,5 +50,4 @@ void get_texture()
         get_txtr_pixels(texture[i]->pixels, i);
         i++;  
     }
-    exit(0);
 }
