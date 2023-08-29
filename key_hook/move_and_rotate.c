@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_and_rotate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:17:00 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/29 18:35:46 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:00:22 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void keyhook()
 	plot_map();
 	draw_player(BLUE, 0, 0);
 	cast_rays();
-	get_texture();
 }
 
 double normalize_angle(double angle)

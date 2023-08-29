@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:32:57 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/29 19:04:42 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	main(int ac, char **av)
 	init_info(av[1]);
 	checks();
 	init_image();
-	mlx_loop_hook(mlx, keyhook, NULL);
-	mlx_loop(mlx);
+	
+	get_texture();
+
+		for (int j = 0; j <(g_elems.txtr[0].width * g_elems.txtr[0].height) / 4; j++)
+			printf("%d\n", g_elems.txtr[0].texture[j]);
+	
+	// mlx_loop_hook(mlx, keyhook, NULL);
+	// mlx_loop(mlx);
 }
