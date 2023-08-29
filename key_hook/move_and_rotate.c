@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:17:00 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 20:37:39 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:29:30 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void rotate_player()
 void update_check_plot_player(float x, float y)
 {
 	float move_speed;
-	move_speed = SQUAR_SIZE/12;
+	move_speed = 1;
 	float new_x = x * move_speed;
 	float new_y = y * move_speed;
 	if(g_elems.map[(int)(g_elems.pos_y_p + new_y)/(SQUAR_SIZE)][(int)(g_elems.pos_x_p + new_x)/(SQUAR_SIZE)] != '1' 
@@ -56,7 +56,9 @@ void keyhook()
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
 		update_check_plot_player(-cos(M_PI/2 - g_elems.player_angle), sin(M_PI/2 - g_elems.player_angle));
 	_2_to_3d();
+	plot_map();
 	draw_player(BLUE, 0, 0);
+	cast_rays();
 }
 
 double normalize_angle(double angle)

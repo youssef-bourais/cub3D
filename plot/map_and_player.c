@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 20:34:19 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:27:58 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,18 +113,17 @@ void draw_player(uint32_t color, float x, float y)
 
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
-	cast_rays();
-	// while (pixel_x < x + radius)
-    // {
-	// 	int pixel_y = y - radius;
-    //     while (pixel_y <= y + radius)
-    //     {
-    //         if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
-    //             mlx_put_pixel(image, pixel_x, pixel_y, color);
-	// 		pixel_y++;
-    //     }
-	// 	pixel_x++;
-    // }
+	while (pixel_x < x + radius)
+    {
+		int pixel_y = y - radius;
+        while (pixel_y <= y + radius)
+        {
+            if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
+                mlx_put_pixel(image, pixel_x, pixel_y, color);
+			pixel_y++;
+        }
+		pixel_x++;
+    }
 }
 
 void DDA(int x0, int y0, int x1, int y1, uint32_t color)

@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/28 20:39:52 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 18:26:59 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define WIDTH 1775
 # define HEIGHT 1325
 
-# define SQUAR_SIZE 64
-# define PLAYER_SIZE 10
+# define SQUAR_SIZE 10
+# define PLAYER_SIZE 4
 # define RAY_WIDTH 1
 # define RAYS_NUM (WIDTH/RAY_WIDTH)
 # define TO_RADIAN (M_PI/(double)180)
@@ -58,8 +58,16 @@
 mlx_t* mlx;
 static	mlx_image_t* image;
 
+typedef struct s_txtr
+{
+	int		width;
+	int		height;
+	uint32_t *texture;
+}	t_txtr;
+
 typedef struct s_elems
 {
+	t_txtr txtr[4];
 	char	*file;
 	int		fd;
 	int		width;
@@ -84,6 +92,8 @@ typedef struct s_elems
 	int		c_color[3];
 }	t_elems;
 t_elems g_elems;
+
+
 
 typedef struct s_coordinate
 {
