@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 18:41:56 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/30 11:48:09 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <limits.h>
 # include <string.h>
 
-# define WIDTH 1775
-# define HEIGHT 1325
+# define WIDTH 1800
+# define HEIGHT 1400
 
 # define SQUAR_SIZE 10
 # define PLAYER_SIZE 4
@@ -68,6 +68,8 @@ typedef struct s_txtr
 typedef struct s_elems
 {
 	t_txtr txtr[4];
+	float x;
+	float y;
 	char	*file;
 	int		fd;
 	int		width;
@@ -81,7 +83,6 @@ typedef struct s_elems
 	char	*so;
 	char	*we;
 	char	*ea;
-	uint32_t *texture;
 	int		floor;
 	int		ceiling;
 	float	pos_x_p;

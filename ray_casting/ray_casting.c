@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:22:34 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/29 18:28:58 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/29 23:13:57 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void creat_ray(double ray_angle, float *dst, int *is_vertical)
 	find_vertical_intersection(ray_angle, &vertical.x_pixel, &vertical.y_pixel);
 	short_distance = compare_distance(vertical.x_pixel, vertical.y_pixel, horizontal.x_pixel, horizontal.y_pixel);
 	*is_vertical = (short_distance.x_pixel == vertical.x_pixel);
+	g_elems.x = short_distance.x_pixel;
+	g_elems.y = short_distance.y_pixel;
 	*dst = distance(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel);
 	DDA(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel, CYAN);
 }

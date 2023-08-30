@@ -1,5 +1,5 @@
 C 10,60,80
-NO ./textures/wall1.png
+NO ./textures/test.png
 SO ./textures/wall2.png
 
 WE ./textures/wall4.png

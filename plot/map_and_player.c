@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_and_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/29 18:42:31 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/30 13:02:32 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,46 @@ void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle
 {
 	int static b;
 	float wall_height;
-	
+
 	ray_distance = ray_distance*cos(g_elems.player_angle - ray_angle);
 	wall_height = (SQUAR_SIZE*HEIGHT)/ray_distance;
 
 	*y0 = HEIGHT/2 - wall_height/2;
 	*y1 = *y0 + wall_height;
 	b++;
+}
+
+void put_textures(int x, float y0, float y1)
+{
+	uint32_t *color = g_elems.txtr[0].texture;
+	int *vert = g_elems.is_vertical;	
+	int image_to_nort = (g_elems.player_angle - (FOV_ANGLE/2)) < 2*M_PI && (g_elems.player_angle - (FOV_ANGLE/2)) >= M_PI;
+	int image_to_east = (g_elems.player_angle - (FOV_ANGLE/2)) >= (3*M_PI)/2 || (g_elems.player_angle - (FOV_ANGLE/2)) < M_PI/2;
+	int pos_in_image;
+
+	if(g_elems.is_vertical[x])
+		pos_in_image = (int)g_elems.y % SQUAR_SIZE;
+	else
+		pos_in_image = (int)g_elems.x % SQUAR_SIZE;
+
+	int i = pos_in_image;
+	float wall_height = y1 - y0;
+
+	int yinc = wall_height / g_elems.txtr[0].height;
+	int n = 0;
+	while (i < g_elems.txtr[0].height*g_elems.txtr[0].width)
+	{
+		n = 0;
+		while (n < yinc)
+		{
+			mlx_put_pixel(image, x, y0, color[i]);
+			y0++;
+			n++;
+		}
+		i += g_elems.txtr[0].width;
+	}
+	// printf("%d %f\n", n, y1-y0);
+	// while(1);
 }
 
 void _2_to_3d()
@@ -93,7 +126,8 @@ void _2_to_3d()
 			y0 = 0;
 			y1 = HEIGHT - 1;
 		}
-		DDA(x, y0, x, y1, ORANGE);
+		put_textures(x, y0, y1);
+		// DDA(x, y0, x, y1, ORANGE);
 		ray_angle += (FOV_ANGLE/RAYS_NUM);
 		x++;
 	}
@@ -152,6 +186,7 @@ void init_image()
 	mlx = mlx_init(WIDTH, HEIGHT, "GAME", 0);
 	image = mlx_new_image(mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(mlx, image, 0, 0);
+	get_texture();
 }
 
 void plot_map()
@@ -159,6 +194,7 @@ void plot_map()
 	int i;
 
 	i = 0;
+	// draw_grid();
 	while (g_elems.map[i])
 	{
 		int j = 0;
