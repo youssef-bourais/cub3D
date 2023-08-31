@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:22:51 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 15:30:50 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	check_map_closed(void)
 	int	j;
 
 	i = 0;
-	while (g_elems.map[i])
+	while (g_inf.map[i])
 	{
 		j = 0;
-		while (g_elems.map[i][j])
+		while (g_inf.map[i][j])
 		{
-			if (g_elems.map[i][j] == '0')
+			if (g_inf.map[i][j] == '0')
 			{
-				if (!wall_player(g_elems.map[i][j + 1]) \
-				|| !wall_player(g_elems.map[i][j - 1]) \
-				|| !wall_player(g_elems.map[i + 1][j]) \
-				|| !wall_player(g_elems.map[i - 1][j]))
+				if (!wall_player(g_inf.map[i][j + 1]) \
+				|| !wall_player(g_inf.map[i][j - 1]) \
+				|| !wall_player(g_inf.map[i + 1][j]) \
+				|| !wall_player(g_inf.map[i - 1][j]))
 					ft_err("Invalid map\n");
 			}
 			j++;

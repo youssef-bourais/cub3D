@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cast_horizontal_lines.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:21:41 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/28 13:07:54 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void init_direction(int *ray_up, int *ray_right, double ray_angle)
 
 void init_horizontal_coordinate(float *x, float *y, double ray_angle, int ray_up)
 {
-	*y = ((int)(g_elems.pos_y_p/SQUAR_SIZE))*SQUAR_SIZE;
+	*y = ((int)(g_inf.pos_y_p/T_SIZE))*T_SIZE;
 	if(!ray_up)
-		*y += SQUAR_SIZE;
-	*x = g_elems.pos_x_p - ((g_elems.pos_y_p - *y)/tan(ray_angle - M_PI));
+		*y += T_SIZE;
+	*x = g_inf.pos_x_p - ((g_inf.pos_y_p - *y)/tan(ray_angle - M_PI));
 	if(ray_up)
 		(*y) -= (float)1/HEIGHT;
 }
 
 void init_horizontal_steps(float *delta_x, float *delta_y, double ray_angle)
 {
-	*delta_x = SQUAR_SIZE/tan(ray_angle - M_PI);
-	*delta_y =  SQUAR_SIZE;
+	*delta_x = T_SIZE/tan(ray_angle - M_PI);
+	*delta_y =  T_SIZE;
 }
 
 void find_horizontal_intersection(double ray_angle, float *x, float *y)
@@ -48,7 +48,7 @@ void find_horizontal_intersection(double ray_angle, float *x, float *y)
 	if(horizontal.ray_up)
 		horizontal.delta_y *= -1;
 
-	while (horizontal.n_x >= 0 && horizontal.n_x <= g_elems.width*SQUAR_SIZE && horizontal.n_y >= 0 && horizontal.n_y <= g_elems.height*SQUAR_SIZE)
+	while (horizontal.n_x >= 0 && horizontal.n_x <= g_inf.width*T_SIZE && horizontal.n_y >= 0 && horizontal.n_y <= g_inf.height*T_SIZE)
 	{
 		if (in_map_pixel(horizontal.n_x, horizontal.n_y))
 		{

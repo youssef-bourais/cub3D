@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:21:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 15:40:40 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	set_info(char **info)
 {
 	if (!info[0])
 		return ;
-	else if (!strcmp(info[0], "EA") && !g_elems.ea && info[1])
-		g_elems.ea = ft_strdup(info[1]);
-	else if (!strcmp(info[0], "NO") && !g_elems.no && info[1])
-		g_elems.no = ft_strdup(info[1]);
-	else if (!strcmp(info[0], "SO") && !g_elems.so && info[1])
-		g_elems.so = ft_strdup(info[1]);
-	else if (!strcmp(info[0], "WE") && !g_elems.we && info[1])
-		g_elems.we = ft_strdup(info[1]);
+	else if (!strcmp(info[0], "EA") && !g_inf.ea && info[1])
+		g_inf.ea = ft_strdup(info[1]);
+	else if (!strcmp(info[0], "NO") && !g_inf.no && info[1])
+		g_inf.no = ft_strdup(info[1]);
+	else if (!strcmp(info[0], "SO") && !g_inf.so && info[1])
+		g_inf.so = ft_strdup(info[1]);
+	else if (!strcmp(info[0], "WE") && !g_inf.we && info[1])
+		g_inf.we = ft_strdup(info[1]);
 	else if (!strcmp(info[0], "F"))
 		set_f_color(info);
 	else if (!strcmp(info[0], "C"))
@@ -40,12 +40,12 @@ void	width_height(void)
 	int	i;
 
 	i = 0;
-	while (g_elems.map[g_elems.height])
-		g_elems.height++;
-	while (g_elems.map[i])
+	while (g_inf.map[g_inf.height])
+		g_inf.height++;
+	while (g_inf.map[i])
 	{
-		if (ft_strlen(g_elems.map[i]) > g_elems.width)
-			g_elems.width = ft_strlen(g_elems.map[i]);
+		if (ft_strlen(g_inf.map[i]) > g_inf.width)
+			g_inf.width = ft_strlen(g_inf.map[i]);
 		i++;
 	}
 }
@@ -85,7 +85,7 @@ void	get_game_info(void)
 	char	*one_line;
 
 	one_line = NULL;
-	line = get_next_line(g_elems.fd);
+	line = get_next_line(g_inf.fd);
 	while (line)
 	{
 		info = ft_split(line, " \t\n");
@@ -94,16 +94,16 @@ void	get_game_info(void)
 		set_info(info);
 		free_array(info);
 		free(line);
-		line = get_next_line(g_elems.fd);
+		line = get_next_line(g_inf.fd);
 	}
 	while (line)
 	{
 		one_line = f_strjoin(one_line, line);
 		free(line);
-		line = get_next_line(g_elems.fd);
+		line = get_next_line(g_inf.fd);
 	}
 	separated_map(one_line);
-	g_elems.map = ft_split(one_line, "\n");
-	if (!g_elems.map)
+	g_inf.map = ft_split(one_line, "\n");
+	if (!g_inf.map)
 		ft_err("Invalid map\n");
 }

@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 15:43:34 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:24:41 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define WIDTH 1400
 # define HEIGHT 1200
 
-# define SQUAR_SIZE 64
+# define T_SIZE 64
 # define PLAYER_SIZE 10
 # define RAY_WIDTH 1
 # define RAYS_NUM (WIDTH/RAY_WIDTH)
@@ -95,7 +95,7 @@ typedef struct s_elems
 	int 	ray_posy[WIDTH];
 	float	ray_angle[WIDTH];
 }	t_elems;
-t_elems g_elems;
+t_elems g_inf;
 
 
 
@@ -143,7 +143,7 @@ void	width_height();
 void 	check_map_size();
 void 	init_image();
 void 	plot_sky_and_land();
-void 	_2_to_3d();
+void 	draw_texture();
 /*========================================*/
 /*===============ray_casting==============*/
 /*========================================*/
@@ -169,7 +169,7 @@ void find_vertical_intersection(double ray_angle, float *x, float *y);
 /*=====================================*/
 /*move_and_rotate*/
 void rotate_player();
-void update_check_plot_player(float x, float y);
+void move_player(float x, float y);
 void keyhook();
 double normalize_angle(double angle);
 
@@ -178,14 +178,10 @@ double normalize_angle(double angle);
 /*===============plot==================*/
 /*=====================================*/
 /*map_and_player*/
-void draw_player(uint32_t color, float x, float y);
-/*plotting_tools*/
-void draw_square(uint32_t color, int x, int y);
-void draw_grid();
-void plot_map();
+void new_pos(float x, float y);
 
 /*tools*/
-void init_player_a(char *p);
+void 	init_player_a(char *p);
 int		ft_atoi(const char *str);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
@@ -212,23 +208,16 @@ void	get_game_info();
 int		check_map();
 int		check_map_closed();
 int		check_wals();
-void	ft_err(char *str);
-void	ft_err(char *str);
 void	separated_map(char *one_line_map);
-void	width_height();
 void	set_f_color(char **info);
 void	set_c_color(char **info);
 int		is_rgb(int nbr);
 int		is_unmber(char *str);
-void	free_array(char **array);
-void	init_info(char *file);
-void	set_info(char **info);
-void	get_game_info();
-int		check_map();
-int		check_map_closed();
-int		check_wals();
 void	ft_err(char *str);
 int	is_map_comp(char c);
 int	is_player(char c);
 
+
+void	plot_sky_and_land(void);
+void	get_y_coordinate(float *y0, float *y1, float distance, double ray_angle);
 #endif

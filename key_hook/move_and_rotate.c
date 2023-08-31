@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:17:00 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/31 15:09:56 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:19:22 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,48 +18,58 @@ void	rotate_player(void)
 		mlx_close_window(mlx);
 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 	{
-		g_elems.player_a = g_elems.player_a - 3 * TO_RADIAN;
-		g_elems.player_a = normalize_angle(g_elems.player_a);
+		g_inf.player_a = g_inf.player_a - 3 * TO_RADIAN;
+		g_inf.player_a = normalize_angle(g_inf.player_a);
 	}
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
 	{
-		g_elems.player_a = g_elems.player_a + 3 * TO_RADIAN;
-		g_elems.player_a = normalize_angle(g_elems.player_a);
+		g_inf.player_a = g_inf.player_a + 3 * TO_RADIAN;
+		g_inf.player_a = normalize_angle(g_inf.player_a);
 	}
 }
 
-void	update_check_plot_player(float x, float y)
+void	move_player(float x, float y)
 {
-	float	move_speed;
 	float	new_x;
 	float	new_y;
+	int		move_speed;
+	int		check_x;
+	int		check_y;
 
-	move_speed = SQUAR_SIZE / 12;
+	move_speed = T_SIZE / 12;
 	new_x = x * move_speed;
 	new_y = y * move_speed;
-	if (g_elems.map[(int)(g_elems.pos_y_p + new_y) / SQUAR_SIZE][(int)(g_elems.pos_x_p + new_x) / SQUAR_SIZE] != '1' 
-		&& g_elems.map[(int)(g_elems.pos_y_p - move_speed + new_y) / SQUAR_SIZE][(int)(g_elems.pos_x_p + new_x) / SQUAR_SIZE] != '1'
-		&& g_elems.map[(int)(g_elems.pos_y_p + move_speed + new_y) / SQUAR_SIZE][(int)(g_elems.pos_x_p + new_x) / SQUAR_SIZE] != '1'
-		&& g_elems.map[(int)(g_elems.pos_y_p + new_y) / SQUAR_SIZE][(int)(g_elems.pos_x_p - move_speed + new_x) / SQUAR_SIZE] != '1'
-		&& g_elems.map[(int)(g_elems.pos_y_p + new_y) / SQUAR_SIZE][(int)(g_elems.pos_x_p - move_speed + new_x) / SQUAR_SIZE] != '1')
-		draw_player(BLUE, new_x, new_y);
-	else
-		draw_player(BLUE, 0, 0);
+	check_y = g_inf.pos_y_p + new_y;
+	check_x = g_inf.pos_x_p + new_x;
+	if (g_inf.map[check_y / T_SIZE][(check_x) / T_SIZE] != '1' 
+		&& g_inf.map[(check_y - move_speed) / T_SIZE][check_x / T_SIZE] != '1'
+		&& g_inf.map[(check_y + move_speed) / T_SIZE][check_x / T_SIZE] != '1'
+		&& g_inf.map[check_y / T_SIZE][(check_x - move_speed) / T_SIZE] != '1'
+		&& g_inf.map[check_y / T_SIZE][(check_x - move_speed) / T_SIZE] != '1')
+	{
+		g_inf.pos_x_p = new_x + g_inf.pos_x_p;
+		g_inf.pos_y_p = new_y + g_inf.pos_y_p;
+	}
 }
 
 void	keyhook(void)
 {
+	float	x;
+	float	y;
+
+	y = sin(M_PI / 2 - g_inf.player_a);
+	x = cos(M_PI / 2 - g_inf.player_a);
 	rotate_player();
 	if (mlx_is_key_down(mlx, MLX_KEY_W))
-		update_check_plot_player(cos(g_elems.player_a), sin(g_elems.player_a));
+		move_player(cos(g_inf.player_a), sin(g_inf.player_a));
 	if (mlx_is_key_down(mlx, MLX_KEY_S))
-		update_check_plot_player(-cos(g_elems.player_a), -sin(g_elems.player_a));
+		move_player(-cos(g_inf.player_a), -sin(g_inf.player_a));
 	if (mlx_is_key_down(mlx, MLX_KEY_A))
-		update_check_plot_player(cos(M_PI / 2 - g_elems.player_a), -sin(M_PI / 2 - g_elems.player_a));
+		move_player(x, -y);
 	if (mlx_is_key_down(mlx, MLX_KEY_D))
-		update_check_plot_player(-cos(M_PI / 2 - g_elems.player_a), sin(M_PI / 2 - g_elems.player_a));
+		move_player(-x, y);
 	cast_rays();
-	_2_to_3d();
+	draw_texture();
 }
 
 double	normalize_angle(double angle)

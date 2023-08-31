@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_elems_utils.c                                  :+:      :+:    :+:   */
+/*   pars2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:15:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 15:20:24 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void	set_f_color(char **info)
 		free_array(rgb);
 		ft_err("RGB vlue must be a proper number\n");
 	}
-	g_elems.f_color[0] = ft_atoi(rgb[0]);
-	g_elems.f_color[1] = ft_atoi(rgb[1]);
-	g_elems.f_color[2] = ft_atoi(rgb[2]);
-	g_elems.floor += 1;
-	if (is_rgb(g_elems.f_color[0]) || is_rgb(g_elems.f_color[1]) \
-	|| is_rgb(g_elems.f_color[2]))
+	g_inf.f_color[0] = ft_atoi(rgb[0]);
+	g_inf.f_color[1] = ft_atoi(rgb[1]);
+	g_inf.f_color[2] = ft_atoi(rgb[2]);
+	g_inf.floor += 1;
+	if (is_rgb(g_inf.f_color[0]) || is_rgb(g_inf.f_color[1]) \
+	|| is_rgb(g_inf.f_color[2]))
 	{
 		free_array(rgb);
 		ft_err("RGB vlue must be between 0 and 255\n");
@@ -89,12 +89,12 @@ void	set_c_color(char **info)
 		free_array(rgb);
 		ft_err("RGB vlue must be a proper number\n");
 	}
-	g_elems.c_color[0] = ft_atoi(rgb[0]);
-	g_elems.c_color[1] = ft_atoi(rgb[1]);
-	g_elems.c_color[2] = ft_atoi(rgb[2]);
-	g_elems.ceiling += 1;
-	if (is_rgb(g_elems.c_color[0]) || is_rgb(g_elems.c_color[1]) \
-	|| is_rgb(g_elems.c_color[2]))
+	g_inf.c_color[0] = ft_atoi(rgb[0]);
+	g_inf.c_color[1] = ft_atoi(rgb[1]);
+	g_inf.c_color[2] = ft_atoi(rgb[2]);
+	g_inf.ceiling += 1;
+	if (is_rgb(g_inf.c_color[0]) || is_rgb(g_inf.c_color[1]) \
+	|| is_rgb(g_inf.c_color[2]))
 	{
 		free_array(rgb);
 		ft_err("RGB vlue must be between 0 and 255\n");

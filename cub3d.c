@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/30 15:15:43 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void	checks()
 	get_game_info();
 	width_height();
 	check_map();
-	init_player_a(g_elems.player);
+	init_player_a(g_inf.player);
 	check_map_closed();
 	check_wals();
 	// check_map_size();
-	if (!g_elems.ea || !g_elems.no || !g_elems.so || !g_elems.we)
+	if (!g_inf.ea || !g_inf.no || !g_inf.so || !g_inf.we)
 		ft_err("Missing info : texturs\n");
-	if (!g_elems.player)
+	if (!g_inf.player)
 		ft_err("Missing info : player\n");
-	if (g_elems.ceiling != 1 || g_elems.floor != 1)
+	if (g_inf.ceiling != 1 || g_inf.floor != 1)
 		ft_err("Missing info : colors\n");
 }
 
