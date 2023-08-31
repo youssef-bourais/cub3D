@@ -6,22 +6,22 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:25:35 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/28 16:49:39 by msodor           ###   ########.fr       */
+/*   Updated: 2023/08/31 15:12:41 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void init_player_a(char *p)
+void	init_player_a(char *p)
 {
 	if (!ft_strcmp(p, "N"))
-		g_elems.player_angle = 3 * M_PI / 2;
+		g_elems.player_a = 3 * M_PI / 2;
 	else if (!ft_strcmp(p, "S"))
-		g_elems.player_angle = M_PI / 2;
+		g_elems.player_a = M_PI / 2;
 	else if (!ft_strcmp(p, "W"))
-		g_elems.player_angle = M_PI;
+		g_elems.player_a = M_PI;
 	else if (!ft_strcmp(p, "E"))
-		g_elems.player_angle = 0;
+		g_elems.player_a = 0;
 }
 
 void	init_info(char *file)

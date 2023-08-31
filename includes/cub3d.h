@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/30 11:48:09 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:43:34 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 # include <limits.h>
 # include <string.h>
 
-# define WIDTH 1800
-# define HEIGHT 1400
+# define WIDTH 1400
+# define HEIGHT 1200
 
-# define SQUAR_SIZE 10
-# define PLAYER_SIZE 4
+# define SQUAR_SIZE 64
+# define PLAYER_SIZE 10
 # define RAY_WIDTH 1
 # define RAYS_NUM (WIDTH/RAY_WIDTH)
 # define TO_RADIAN (M_PI/(double)180)
@@ -68,8 +68,8 @@ typedef struct s_txtr
 typedef struct s_elems
 {
 	t_txtr txtr[4];
-	float x;
-	float y;
+	float 	x;
+	float 	y;
 	char	*file;
 	int		fd;
 	int		width;
@@ -78,7 +78,7 @@ typedef struct s_elems
 	char	*player;
 	int		player_x;
 	int		player_y;
-	double	player_angle;
+	double	player_a;
 	char	*no;
 	char	*so;
 	char	*we;
@@ -91,6 +91,9 @@ typedef struct s_elems
 	int		*is_vertical;
 	int		f_color[3];
 	int		c_color[3];
+	int 	ray_posx[WIDTH];
+	int 	ray_posy[WIDTH];
+	float	ray_angle[WIDTH];
 }	t_elems;
 t_elems g_elems;
 
@@ -133,8 +136,7 @@ typedef struct s_direction
 }	t_direction;
 
 
-
-
+/*========================================*/
 
 void get_texture();
 void	width_height();
@@ -180,8 +182,6 @@ void draw_player(uint32_t color, float x, float y);
 /*plotting_tools*/
 void draw_square(uint32_t color, int x, int y);
 void draw_grid();
-void draw_line(float x, float y);
-void DDA(int x0, int y0, int x1, int y1, uint32_t color);
 void plot_map();
 
 /*tools*/
@@ -214,5 +214,21 @@ int		check_map_closed();
 int		check_wals();
 void	ft_err(char *str);
 void	ft_err(char *str);
+void	separated_map(char *one_line_map);
+void	width_height();
+void	set_f_color(char **info);
+void	set_c_color(char **info);
+int		is_rgb(int nbr);
+int		is_unmber(char *str);
+void	free_array(char **array);
+void	init_info(char *file);
+void	set_info(char **info);
+void	get_game_info();
+int		check_map();
+int		check_map_closed();
+int		check_wals();
+void	ft_err(char *str);
+int	is_map_comp(char c);
+int	is_player(char c);
 
 #endif

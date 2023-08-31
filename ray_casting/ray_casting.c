@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:22:34 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/29 23:13:57 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:08:49 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	cast_rays()
 {
-	double ray_angle = g_elems.player_angle - (FOV_ANGLE/2);
+	double ray_angle = g_elems.player_a - (FOV_ANGLE/2);
 	int i = 0;
 	int is_vertical;
 	float distance;
@@ -24,7 +24,11 @@ void	cast_rays()
 		ray_angle = normalize_angle(ray_angle);
 		creat_ray(ray_angle, &distance, &is_vertical);
 		g_elems.ray_distante[i] = distance;
+		g_elems.is_vertical[i] = is_vertical;
 		ray_angle = ray_angle + (FOV_ANGLE/RAYS_NUM);
+		g_elems.ray_angle[i] = ray_angle;
+		g_elems.ray_posx[i] = g_elems.x;
+		g_elems.ray_posy[i] = g_elems.y;
 		i++;
 	}
 }
@@ -48,8 +52,8 @@ void creat_ray(double ray_angle, float *dst, int *is_vertical)
 	*is_vertical = (short_distance.x_pixel == vertical.x_pixel);
 	g_elems.x = short_distance.x_pixel;
 	g_elems.y = short_distance.y_pixel;
+	
 	*dst = distance(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel);
-	DDA(g_elems.pos_x_p, g_elems.pos_y_p, short_distance.x_pixel, short_distance.y_pixel, CYAN);
 }
 
 float distance(float x1, float y1, float x2, float y2)

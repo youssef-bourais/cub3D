@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_and_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/30 13:02:32 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:45:47 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle
 	int static b;
 	float wall_height;
 
-	ray_distance = ray_distance*cos(g_elems.player_angle - ray_angle);
+	ray_distance = ray_distance*cos(g_elems.player_a - ray_angle);
 	wall_height = (SQUAR_SIZE*HEIGHT)/ray_distance;
 
 	*y0 = HEIGHT/2 - wall_height/2;
@@ -76,37 +76,45 @@ void get_y_coordinate(float *y0, float *y1, float ray_distance, double ray_angle
 	b++;
 }
 
-void put_textures(int x, float y0, float y1)
+void put_textures(int x, float y0, float y1, float start)
 {
-	uint32_t *color = g_elems.txtr[0].texture;
+	unsigned int colorr;
 	int *vert = g_elems.is_vertical;	
-	int image_to_nort = (g_elems.player_angle - (FOV_ANGLE/2)) < 2*M_PI && (g_elems.player_angle - (FOV_ANGLE/2)) >= M_PI;
-	int image_to_east = (g_elems.player_angle - (FOV_ANGLE/2)) >= (3*M_PI)/2 || (g_elems.player_angle - (FOV_ANGLE/2)) < M_PI/2;
-	int pos_in_image;
+	int ray_up = g_elems.ray_angle[x] > M_PI && g_elems.ray_angle[x] < 2*M_PI;
+	int ray_right = g_elems.ray_angle[x] > M_PI_2 && g_elems.ray_angle[x] < (3*M_PI) / 2;
+	float pos_in_image;
 
 	if(g_elems.is_vertical[x])
-		pos_in_image = (int)g_elems.y % SQUAR_SIZE;
+		pos_in_image = g_elems.ray_posy[x] % SQUAR_SIZE;
 	else
-		pos_in_image = (int)g_elems.x % SQUAR_SIZE;
+		pos_in_image = g_elems.ray_posx[x] % SQUAR_SIZE;
 
-	int i = pos_in_image;
 	float wall_height = y1 - y0;
-
-	int yinc = wall_height / g_elems.txtr[0].height;
-	int n = 0;
-	while (i < g_elems.txtr[0].height*g_elems.txtr[0].width)
+	float inc = SQUAR_SIZE / wall_height;
+	if (start < 0)
+		start = 0;
+	int i = 0;
+	float row = (inc * start);
+	while (i < wall_height && i < HEIGHT)
 	{
-		n = 0;
-		while (n < yinc)
+		if (!g_elems.is_vertical[x])
 		{
-			mlx_put_pixel(image, x, y0, color[i]);
-			y0++;
-			n++;
+			if (ray_up)
+				colorr = g_elems.txtr[0].texture[SQUAR_SIZE * (int)row + (int)pos_in_image];
+			if (!ray_up)
+				colorr = g_elems.txtr[1].texture[SQUAR_SIZE * (int)row + (int)pos_in_image];
 		}
-		i += g_elems.txtr[0].width;
+		else if (g_elems.is_vertical[x])
+		{
+			if (ray_right)
+				colorr = g_elems.txtr[2].texture[SQUAR_SIZE * (int)row + (int)pos_in_image];
+			if (!ray_right)
+				colorr = g_elems.txtr[3].texture[SQUAR_SIZE * (int)row + (int)pos_in_image];
+		}
+		mlx_put_pixel(image, x, y0 + i, colorr);
+		row += inc;
+		i++;
 	}
-	// printf("%d %f\n", n, y1-y0);
-	// while(1);
 }
 
 void _2_to_3d()
@@ -115,19 +123,23 @@ void _2_to_3d()
 	float y0;
 	float y1;
 	double ray_angle;
+	float wall_height;
+	float start = 0;
 
 	plot_sky_and_land();
-	ray_angle = (g_elems.player_angle - 30*TO_RADIAN);
+	ray_angle = (g_elems.player_a - 30*TO_RADIAN);
 	while (x < WIDTH)
 	{
 		get_y_coordinate(&y0, &y1, g_elems.ray_distante[x], ray_angle);
+		wall_height = y1 - y0;
+		start = (wall_height / 2) - (HEIGHT/ 2);
+		
 		if(y0 > HEIGHT || y0 < 0 || y1 > HEIGHT || y1 < 0)
 		{
 			y0 = 0;
-			y1 = HEIGHT - 1;
+			y1 = HEIGHT + (start * 2);
 		}
-		put_textures(x, y0, y1);
-		// DDA(x, y0, x, y1, ORANGE);
+		put_textures(x, y0, y1, start);
 		ray_angle += (FOV_ANGLE/RAYS_NUM);
 		x++;
 	}
@@ -143,43 +155,17 @@ void draw_player(uint32_t color, float x, float y)
 	int radius = PLAYER_SIZE / 2;
 	int pixel_x = x - radius;
 	while (pixel_x < x + radius)
-    {
+  {
 		int pixel_y = y - radius;
-        while (pixel_y <= y + radius)
-        {
-            if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
-                mlx_put_pixel(image, pixel_x, pixel_y, color);
+    while (pixel_y <= y + radius)
+    {
+      if (pow(pixel_x - x, 2) + pow(pixel_y - y, 2) <= pow(radius, 2))
+        mlx_put_pixel(image, pixel_x, pixel_y, color);
 			pixel_y++;
-        }
-		pixel_x++;
     }
+		pixel_x++;
+  }
 }
-
-void DDA(int x0, int y0, int x1, int y1, uint32_t color)
-{
-	t_norm norm;
-    norm.dx = x1 - x0;
-    norm.dy = y1 - y0;
-	int steps;
-
-	if (abs(norm.dx) >= abs(norm.dy))
-		steps = abs(norm.dx);
-	else
-		steps = abs(norm.dy);
-    norm.x = x0;
-    norm.y = y0;
-	norm.x_step = (float)norm.dx / steps;
-	norm.y_step = (float)norm.dy / steps;
-	int i = 0;
-	while (i <= steps)
-	{
-		mlx_put_pixel(image, round(norm.x), round(norm.y), color);
-		norm.x = norm.x + norm.x_step;
-		norm.y = norm.y + norm.y_step;
-		i++;
-	}
-}
-
 
 void init_image()
 {
@@ -194,7 +180,6 @@ void plot_map()
 	int i;
 
 	i = 0;
-	// draw_grid();
 	while (g_elems.map[i])
 	{
 		int j = 0;

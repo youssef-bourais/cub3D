@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/30 10:40:18 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:15:43 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	checks()
 	init_player_a(g_elems.player);
 	check_map_closed();
 	check_wals();
-	check_map_size();
+	// check_map_size();
 	if (!g_elems.ea || !g_elems.no || !g_elems.so || !g_elems.we)
 		ft_err("Missing info : texturs\n");
 	if (!g_elems.player)

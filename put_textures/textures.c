@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
+/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:22:30 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/29 19:52:40 by ybourais         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:44:00 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void    get_txtr_pixels(uint8_t *pixels, int idx)
 
     i = 0;
     j = 0;
-    g_elems.txtr[idx].texture = malloc(sizeof(uint32_t) * (g_elems.txtr[idx].width * g_elems.txtr[idx].height));
-    while (i < g_elems.txtr[idx].width * g_elems.txtr[idx].height*4)
+    g_elems.txtr[idx].texture = malloc(sizeof(uint32_t) * (g_elems.txtr[idx].width * g_elems.txtr[idx].height) * 4);
+    while (i < g_elems.txtr[idx].width * g_elems.txtr[idx].height * 4)
     {
         g_elems.txtr[idx].texture[j] = ft_pixel(pixels[i], pixels[i + 1], pixels[i + 2], pixels[i + 3]);
         i += 4;
