@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/03 15:07:30 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	checks()
 	init_player_a(g_inf.player);
 	check_map_closed();
 	check_wals();
-	// check_map_size();
 	if (!g_inf.ea || !g_inf.no || !g_inf.so || !g_inf.we)
 		ft_err("Missing info : texturs\n");
 	if (!g_inf.player)

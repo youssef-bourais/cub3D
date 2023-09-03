@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:36:23 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/31 20:28:36 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/03 13:22:14 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,3 @@ void	get_y_coordinate(float *y0, float *y1, float distance, double ray_angle)
 	*y0 = HEIGHT / 2 - wall_height / 2;
 	*y1 = *y0 + wall_height;
 }
-

@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:21:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/02 17:45:55 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	separated_map(char *one_line_map)
 
 void	get_game_info(void)
 {
-	char	*line;
 	char	**info;
+	char	*line;
 	char	*one_line;
 
 	one_line = NULL;

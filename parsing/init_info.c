@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:25:35 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/02 17:51:15 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	init_info(char *file)
 	g_inf.ray_distante = malloc(RAYS_NUM * sizeof(float));
 	g_inf.is_vertical = malloc(RAYS_NUM * sizeof(int));
 	g_inf.fd = open(g_inf.file, O_RDONLY);
+	if (g_inf.fd == -1)
+		ft_err("File not found\n");
 	g_inf.ea = NULL;
 	g_inf.no = NULL;
 	g_inf.so = NULL;

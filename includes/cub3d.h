@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 20:24:41 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/03 15:05:58 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ typedef struct s_norm
 
 typedef struct s_data
 {
-	float x_pixel;
-	float y_pixel;
+	float x;
+	float y;
 }	t_data;
 
 typedef struct s_direction
