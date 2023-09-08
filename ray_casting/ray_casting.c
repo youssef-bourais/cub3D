@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:22:34 by ybourais          #+#    #+#             */
-/*   Updated: 2023/09/03 15:06:57 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 12:01:28 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	cast_rays(void)
 {
-	int			i;
-	int			is_vertical;
-	float		distance;
+	int		i;
+	int		is_vertical;
+	float	distance;
 	double	ray_angle;
 
 	i = 0;
-	ray_angle = g_inf.player_a - (FOV_ANGLE / 2);
+	ray_angle = g_inf.player_a - ((60 * (M_PI / (double)180)) / 2);
 	while (i < RAYS_NUM)
 	{
 		ray_angle = normalize_angle(ray_angle);
 		creat_ray(ray_angle, &distance, &is_vertical);
 		g_inf.ray_distante[i] = distance;
 		g_inf.is_vertical[i] = is_vertical;
-		ray_angle = ray_angle + (FOV_ANGLE / RAYS_NUM);
+		ray_angle = ray_angle + ((60 * (M_PI / (double)180)) / RAYS_NUM);
 		g_inf.ray_angle[i] = ray_angle;
 		g_inf.ray_posx[i] = g_inf.x;
 		g_inf.ray_posy[i] = g_inf.y;

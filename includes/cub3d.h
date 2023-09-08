@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/03 15:05:58 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 12:04:22 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 # endif
 
 # include "../MLX42/MLX42.h"
-# include <stdio.h>
-# include <stdbool.h>
-# include <stdlib.h>
-# include <math.h>
-# include <unistd.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <string.h>
+# include <unistd.h>
 
 # define WIDTH 1400
 # define HEIGHT 1200
@@ -33,155 +33,128 @@
 # define T_SIZE 64
 # define PLAYER_SIZE 10
 # define RAY_WIDTH 1
-# define RAYS_NUM (WIDTH/RAY_WIDTH)
-# define TO_RADIAN (M_PI/(double)180)
-# define FOV_ANGLE (60*TO_RADIAN)
-
-#define DARK_BLUE 191970
-#define DARK_ORANGE 0x483C32
-#define DARK_GREEN 0x3e00ed
-
-#define WHITE 0xFFFFFFFF
-#define BLUE 0xFFFF
-#define RED 0xFF0000FF
-#define PURPLE 0xFF00FFFF
-#define YELLOW 0xFFFF00FF
-#define BLACK 0x00000000
-
-#define GREEN 0x00FF00FF
-#define ORANGE 0xFFA500FF
-#define PINK 0xFF69B4FF
-#define CYAN 0x00FFFFFF
-#define GRAY 0x808080FF
-#define BROWN 0xA52A2AFF
-
-mlx_t* mlx;
-static	mlx_image_t* image;
+# define RAYS_NUM 1400
 
 typedef struct s_txtr
 {
-	int		width;
-	int		height;
-	uint32_t *texture;
-}	t_txtr;
+	int				width;
+	int				height;
+	uint32_t		*texture;
+}					t_txtr;
 
 typedef struct s_elems
 {
-	t_txtr txtr[4];
-	float 	x;
-	float 	y;
-	char	*file;
-	int		fd;
-	int		width;
-	int		height;
-	char	**map;
-	char	*player;
-	int		player_x;
-	int		player_y;
-	double	player_a;
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	int		floor;
-	int		ceiling;
-	float	pos_x_p;
-	float	pos_y_p;
-	float	*ray_distante;
-	int		*is_vertical;
-	int		f_color[3];
-	int		c_color[3];
-	int 	ray_posx[WIDTH];
-	int 	ray_posy[WIDTH];
-	float	ray_angle[WIDTH];
-}	t_elems;
-t_elems g_inf;
+	mlx_t		*mlx;
+	mlx_image_t	*image;
+	t_txtr		txtr[4];
+	float		x;
+	float		y;
+	char		*file;
+	int			fd;
+	int			width;
+	int			height;
+	char		**map;
+	char		*player;
+	int			player_x;
+	int			player_y;
+	double		player_a;
+	char		*no;
+	char		*so;
+	char		*we;
+	char		*ea;
+	int			floor;
+	int			ceiling;
+	float		pos_x_p;
+	float		pos_y_p;
+	float		*ray_distante;
+	int			*is_vertical;
+	int			f_color[3];
+	int			c_color[3];
+	int			ray_posx[WIDTH];
+	int			ray_posy[WIDTH];
+	float		ray_angle[WIDTH];
+}					t_elems;
 
-
+t_elems	g_inf;
 
 typedef struct s_coordinate
 {
-	int ray_up;
-	int ray_right;
-	float n_x;
-	float n_y;
-	float delta_y;
-	float delta_x;
-}	t_coordinate;
+	int				ray_up;
+	int				ray_right;
+	float			n_x;
+	float			n_y;
+	float			delta_y;
+	float			delta_x;
+}					t_coordinate;
 
 typedef struct s_norm
 {
-	int dx;
-	int dy;
-	int steps;
-	float x;
-	float y;
-	float x_step;
-	float y_step;
-	float slope;
-}	t_norm;
+	int				dx;
+	int				dy;
+	int				steps;
+	float			x;
+	float			y;
+	float			x_step;
+	float			y_step;
+	float			slope;
+}					t_norm;
 
 typedef struct s_data
 {
-	float x;
-	float y;
-}	t_data;
+	float			x;
+	float			y;
+}					t_data;
 
 typedef struct s_direction
 {
-	int up;
-	int down;
-	int right;
-	int left;
-}	t_direction;
-
+	int				up;
+	int				down;
+	int				right;
+	int				left;
+}					t_direction;
 
 /*========================================*/
 
-void get_texture();
-void	width_height();
-void 	check_map_size();
-void 	init_image();
-void 	plot_sky_and_land();
-void 	draw_texture();
+void	get_texture(void);
+void	width_height(void);
+void	check_map_size(void);
+void	init_image(void);
+void	plot_sky_and_land(void);
+void	draw_texture(void);
 /*========================================*/
 /*===============ray_casting==============*/
 /*========================================*/
 /*ray_casting*/
-void	cast_rays();
-void creat_ray(double ray_angle, float *dst, int *is_vertical);
-float distance(float x1, float y1, float x2, float y2);
-t_data compare_distance(float x_v, float y_v, float x_h, float y_h);
-int	in_map_pixel(float x, float y);
+void	cast_rays(void);
+void	creat_ray(double ray_angle, float *dst, int *is_vertical);
+float	distance(float x1, float y1, float x2, float y2);
+t_data	compare_distance(float x_v, float y_v, float x_h, float y_h);
+int		in_map_pixel(float x, float y);
 /*cast_horizontal_lines*/
-void init_direction(int *ray_up, int *ray_right, double ray_angle);
-void init_horizontal_coordinate(float *x, float *y, double ray_angle, int ray_up);
-void init_horizontal_steps(float *delta_x, float *delta_y, double ray_angle);
-void find_horizontal_intersection(double ray_angle, float *x, float *y);
+void	init_direction(int *ray_up, int *ray_right, double ray_angle);
+void	init_horizontal_steps(float *delta_x, float *delta_y, double ray_angle);
+void	find_horizontal_intersection(double ray_angle, float *x, float *y);
 /*cast_vertical_lines*/
-void init_vertical_coordinate(float *x, float *y, double ray_angle, int ray_right);
-void init_vertical_steps(float *delta_x, float *delta_y, double ray_angle);
-void find_vertical_intersection(double ray_angle, float *x, float *y);
-
-
+void	init_vertical_steps(float *delta_x, float *delta_y, double ray_angle);
+void	find_vertical_intersection(double ray_angle, float *x, float *y);
 /*=====================================*/
 /*===============key_hook==============*/
 /*=====================================*/
 /*move_and_rotate*/
-void rotate_player();
-void move_player(float x, float y);
-void keyhook();
-double normalize_angle(double angle);
-
+void	rotate_player(void);
+void	move_player(float x, float y);
+void	keyhook(void *param);
+double	normalize_angle(double angle);
+int32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 /*=====================================*/
 /*===============plot==================*/
 /*=====================================*/
 /*map_and_player*/
-void new_pos(float x, float y);
+void	new_pos(float x, float y);
 
 /*tools*/
-void 	init_player_a(char *p);
+void	init_player_a(char *p);
 int		ft_atoi(const char *str);
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
@@ -204,20 +177,19 @@ char	*get_next_line(int fd);
 void	init_info(char *file);
 void	free_array(char **array);
 void	set_info(char **info);
-void	get_game_info();
-int		check_map();
-int		check_map_closed();
-int		check_wals();
+void	get_game_info(void);
+int		check_map(void);
+int		check_map_closed(void);
+int		check_wals(void);
 void	separated_map(char *one_line_map);
 void	set_f_color(char **info);
 void	set_c_color(char **info);
 int		is_rgb(int nbr);
 int		is_unmber(char *str);
 void	ft_err(char *str);
-int	is_map_comp(char c);
-int	is_player(char c);
-
-
+int		is_map_comp(char c);
+int		is_player(char c);
+void	get_y_coordinate(float *y0, float *y1, float distance, double ray_a);
 void	plot_sky_and_land(void);
-void	get_y_coordinate(float *y0, float *y1, float distance, double ray_angle);
+
 #endif

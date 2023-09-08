@@ -1,4 +1,4 @@
-C 10,60,80
+C 30,60,255
 NO ./textures/TECH_1.png
 SO ./textures/TECH_2.png
 

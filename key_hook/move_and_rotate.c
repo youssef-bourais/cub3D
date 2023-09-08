@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:17:00 by ybourais          #+#    #+#             */
-/*   Updated: 2023/08/31 20:19:22 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:59:58 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	rotate_player(void)
 {
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(g_inf.mlx);
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_LEFT))
 	{
-		g_inf.player_a = g_inf.player_a - 3 * TO_RADIAN;
+		g_inf.player_a = g_inf.player_a - 3 * (M_PI / (double)180);
 		g_inf.player_a = normalize_angle(g_inf.player_a);
 	}
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_RIGHT))
 	{
-		g_inf.player_a = g_inf.player_a + 3 * TO_RADIAN;
+		g_inf.player_a = g_inf.player_a + 3 * (M_PI / (double)180);
 		g_inf.player_a = normalize_angle(g_inf.player_a);
 	}
 }
@@ -52,21 +52,22 @@ void	move_player(float x, float y)
 	}
 }
 
-void	keyhook(void)
+void	keyhook(void *param)
 {
 	float	x;
 	float	y;
 
+	(void)param;
 	y = sin(M_PI / 2 - g_inf.player_a);
 	x = cos(M_PI / 2 - g_inf.player_a);
 	rotate_player();
-	if (mlx_is_key_down(mlx, MLX_KEY_W))
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_W))
 		move_player(cos(g_inf.player_a), sin(g_inf.player_a));
-	if (mlx_is_key_down(mlx, MLX_KEY_S))
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_S))
 		move_player(-cos(g_inf.player_a), -sin(g_inf.player_a));
-	if (mlx_is_key_down(mlx, MLX_KEY_A))
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_A))
 		move_player(x, -y);
-	if (mlx_is_key_down(mlx, MLX_KEY_D))
+	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_D))
 		move_player(-x, y);
 	cast_rays();
 	draw_texture();

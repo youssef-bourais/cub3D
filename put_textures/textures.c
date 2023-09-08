@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:22:30 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/03 14:33:57 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:50:37 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 
 void	get_txtr_pixels(uint8_t *pxl, int idx)
 {
-	int			i;
-	int			j;
+	int		i;
+	int		j;
 	int32_t	pixel;
 
 	i = 0;
@@ -37,7 +37,7 @@ void	get_txtr_pixels(uint8_t *pxl, int idx)
 
 void	get_texture(void)
 {
-	int						i;
+	int				i;
 	mlx_texture_t	*texture[4];
 
 	texture[0] = mlx_load_png(g_inf.no);

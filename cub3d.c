@@ -6,13 +6,13 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 12:02:20 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/03 15:07:30 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:55:03 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-void	checks()
+void	checks(void)
 {
 	get_game_info();
 	width_height();
@@ -35,6 +35,6 @@ int	main(int ac, char **av)
 	init_info(av[1]);
 	checks();
 	init_image();
-	mlx_loop_hook(mlx, keyhook, NULL);
-	mlx_loop(mlx);
+	mlx_loop_hook(g_inf.mlx, keyhook, NULL);
+	mlx_loop(g_inf.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:21:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/02 17:45:55 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 12:18:16 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	get_game_info(void)
 		free(line);
 		line = get_next_line(g_inf.fd);
 	}
+	free_array(info);
 	while (line)
 	{
 		one_line = f_strjoin(one_line, line);
@@ -104,6 +105,7 @@ void	get_game_info(void)
 	}
 	separated_map(one_line);
 	g_inf.map = ft_split(one_line, "\n");
+	free(one_line);
 	if (!g_inf.map)
 		ft_err("Invalid map\n");
 }

@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:06:56 by ybourais          #+#    #+#             */
-/*   Updated: 2023/09/03 13:37:52 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:58:31 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,74 @@
 
 void	plot_sky_and_land(void)
 {
-	int	i;
-	int	j;
+	int			i;
+	int			j;
+	u_int32_t	floor;
+	u_int32_t	sky;
 
 	i = 0;
+	floor = ft_pixel(g_inf.f_color[0], g_inf.f_color[1], g_inf.f_color[2], 225);
+	sky = ft_pixel(g_inf.c_color[0], g_inf.c_color[1], g_inf.c_color[2], 225);
 	while (i < HEIGHT)
 	{
 		j = 0;
 		while (j < WIDTH)
 		{
 			if (i <= HEIGHT / 2)
-				mlx_put_pixel(image, j, i, DARK_BLUE);
+				mlx_put_pixel(g_inf.image, j, i, sky);
 			else
-				mlx_put_pixel(image, j, i, DARK_GREEN);
+				mlx_put_pixel(g_inf.image, j, i, floor);
 			j++;
 		}
 		i++;
 	}
 }
 
+unsigned int	getc_color(float row, float col, int x)
+{
+	int	ray_u;
+	int	ray_r;
+
+	ray_u = g_inf.ray_angle[x] > M_PI && g_inf.ray_angle[x] < 2 * M_PI;
+	ray_r = g_inf.ray_angle[x] > M_PI_2 && g_inf.ray_angle[x] < (3 * M_PI) / 2;
+	if (!g_inf.is_vertical[x])
+	{
+		if (ray_u)
+			return (g_inf.txtr[0].texture[T_SIZE * (int)row + (int)col]);
+		if (!ray_u)
+			return (g_inf.txtr[1].texture[T_SIZE * (int)row + (int)col]);
+	}
+	else if (g_inf.is_vertical[x])
+	{
+		if (ray_r)
+			return (g_inf.txtr[2].texture[T_SIZE * (int)row + (int)col]);
+		if (!ray_r)
+			return (g_inf.txtr[3].texture[T_SIZE * (int)row + (int)col]);
+	}
+	return (0);
+}
+
 void	put_textures(int x, float y0, float y1, float start)
 {
-	unsigned int	color;
-	int ray_up = g_inf.ray_angle[x] > M_PI && g_inf.ray_angle[x] < 2*M_PI;
-	int ray_right = g_inf.ray_angle[x] > M_PI_2 && g_inf.ray_angle[x] < (3*M_PI) / 2;
-	float col;
+	float			col;
+	float			row;
+	float			wall_height;
+	float			inc;
+	int				i;
 
-	if(g_inf.is_vertical[x])
+	if (g_inf.is_vertical[x])
 		col = g_inf.ray_posy[x] % T_SIZE;
 	else
 		col = g_inf.ray_posx[x] % T_SIZE;
-
-	float wall_height = y1 - y0;
-	float inc = T_SIZE / wall_height;
+	wall_height = y1 - y0;
+	inc = T_SIZE / wall_height;
 	if (start < 0)
 		start = 0;
-	int i = 0;
-	float row = (inc * start);
+	i = 0;
+	row = (inc * start);
 	while (i < wall_height && i < HEIGHT)
 	{
-		if (!g_inf.is_vertical[x])
-		{
-			if (ray_up)
-				color = g_inf.txtr[0].texture[T_SIZE * (int)row + (int)col];
-			if (!ray_up)
-				color = g_inf.txtr[1].texture[T_SIZE * (int)row + (int)col];
-		}
-		else if (g_inf.is_vertical[x])
-		{
-			if (ray_right)
-				color = g_inf.txtr[2].texture[T_SIZE * (int)row + (int)col];
-			if (!ray_right)
-				color = g_inf.txtr[3].texture[T_SIZE * (int)row + (int)col];
-		}
-		mlx_put_pixel(image, x, y0 + i, color);
+		mlx_put_pixel(g_inf.image, x, y0 + i, getc_color(row, col, x));
 		row += inc;
 		i++;
 	}
@@ -88,8 +102,8 @@ void	draw_texture(void)
 	{
 		get_y_coordinate(&y0, &y1, g_inf.ray_distante[x], g_inf.ray_angle[x]);
 		wall_height = y1 - y0;
-		start = (wall_height / 2) - (HEIGHT/ 2);
-		if(y0 > HEIGHT || y0 < 0 || y1 > HEIGHT || y1 < 0)
+		start = (wall_height / 2) - (HEIGHT / 2);
+		if (y0 > HEIGHT || y0 < 0 || y1 > HEIGHT || y1 < 0)
 		{
 			y0 = 0;
 			y1 = HEIGHT + (start * 2);
@@ -101,8 +115,8 @@ void	draw_texture(void)
 
 void	init_image(void)
 {
-	mlx = mlx_init(WIDTH, HEIGHT, "GAME", 0);
-	image = mlx_new_image(mlx, WIDTH, HEIGHT);
-	mlx_image_to_window(mlx, image, 0, 0);
+	g_inf.mlx = mlx_init(WIDTH, HEIGHT, "GAME", 0);
+	g_inf.image = mlx_new_image(g_inf.mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(g_inf.mlx, g_inf.image, 0, 0);
 	get_texture();
 }
