@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:21:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/08 12:18:16 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/09 16:07:37 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,6 @@ int	is_all_wall(char *str)
 	return (0);
 }
 
-void	separated_map(char *one_line_map)
-{
-	int	i;
-
-	i = 0;
-	while (one_line_map[i])
-	{
-		if (one_line_map[i] == '\n' && one_line_map[i + 1]
-			&& one_line_map[i + 1] == '\n')
-			ft_err("Invalid map\n");
-		i++;
-	}
-}
-
 void	get_game_info(void)
 {
 	char	**info;
@@ -96,14 +82,16 @@ void	get_game_info(void)
 		free(line);
 		line = get_next_line(g_inf.fd);
 	}
-	free_array(info);
 	while (line)
 	{
 		one_line = f_strjoin(one_line, line);
+		if (ft_strlen(line) == 1)
+			break ;
 		free(line);
 		line = get_next_line(g_inf.fd);
 	}
-	separated_map(one_line);
+	if (!one_line)
+		ft_err("No map found\n");
 	g_inf.map = ft_split(one_line, "\n");
 	free(one_line);
 	if (!g_inf.map)

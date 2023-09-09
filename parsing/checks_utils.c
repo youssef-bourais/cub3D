@@ -6,7 +6,7 @@
 /*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:22:51 by msodor            #+#    #+#             */
-/*   Updated: 2023/08/31 20:13:03 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/09 16:08:04 by msodor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_player(char c)
 	return (0);
 }
 
-int	wall_player(char c)
+int	wall(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);
@@ -46,10 +46,10 @@ int	check_map_closed(void)
 		{
 			if (g_inf.map[i][j] == '0')
 			{
-				if (!wall_player(g_inf.map[i][j + 1]) \
-				|| !wall_player(g_inf.map[i][j - 1]) \
-				|| !wall_player(g_inf.map[i + 1][j]) \
-				|| !wall_player(g_inf.map[i - 1][j]))
+				if ((ft_strlen(g_inf.map[i]) >= j && !wall(g_inf.map[i][j + 1]))
+				|| (ft_strlen(g_inf.map[i]) >= j && !wall(g_inf.map[i][j - 1]))
+				|| (g_inf.map[i + 1] && !wall(g_inf.map[i + 1][j]))
+				|| (g_inf.map[i - 1][j] && !wall(g_inf.map[i - 1][j])))
 					ft_err("Invalid map\n");
 			}
 			j++;
