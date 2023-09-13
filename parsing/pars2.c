@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:15:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/02 17:41:37 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/13 17:50:01 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	set_f_color(char **info)
 	char	**rgb;
 
 	rgb = ft_split(info[1], ",");
-	if (!rgb[0] || !rgb[1] || !rgb[2])
+	if (count_coma(info[1]) || !rgb[0] || !rgb[1] || !rgb[2])
 	{
 		free_array(rgb);
 		ft_err("RGB colors must have 3 values\n");
@@ -79,7 +79,7 @@ void	set_c_color(char **info)
 	char	**rgb;
 
 	rgb = ft_split(info[1], ",");
-	if (!rgb[0] || !rgb[1] || !rgb[2])
+	if (count_coma(info[1]) || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 	{
 		free_array(rgb);
 		ft_err("RGB colors must have 3 values\n");

@@ -89,6 +89,6 @@ int	check_t_b_wall(void)
 int	check_wals(void)
 {
 	if (check_l_r_wall() || check_t_b_wall())
-		ft_err("g_inf is not closed\n");
+		ft_err("map is not closed\n");
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_and_rotate.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:17:00 by ybourais          #+#    #+#             */
-/*   Updated: 2023/09/08 11:59:58 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/13 17:46:32 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,18 @@ void	move_player(float x, float y)
 
 void	keyhook(void *param)
 {
-	float	x;
-	float	y;
-
 	(void)param;
-	y = sin(M_PI / 2 - g_inf.player_a);
-	x = cos(M_PI / 2 - g_inf.player_a);
 	rotate_player();
 	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_W))
 		move_player(cos(g_inf.player_a), sin(g_inf.player_a));
 	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_S))
 		move_player(-cos(g_inf.player_a), -sin(g_inf.player_a));
 	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_A))
-		move_player(x, -y);
+		move_player(cos(M_PI / 2 - g_inf.player_a), \
+		-sin(M_PI / 2 - g_inf.player_a));
 	if (mlx_is_key_down(g_inf.mlx, MLX_KEY_D))
-		move_player(-x, y);
+		move_player(-cos(M_PI / 2 - g_inf.player_a), \
+		sin(M_PI / 2 - g_inf.player_a));
 	cast_rays();
 	draw_texture();
 }

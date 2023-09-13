@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:49:17 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/08 12:04:22 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/13 17:53:12 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,6 @@ int32_t	ft_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 /*=====================================*/
 /*===============plot==================*/
 /*=====================================*/
-/*map_and_player*/
-void	new_pos(float x, float y);
-
 /*tools*/
 void	init_player_a(char *p);
 int		ft_atoi(const char *str);
@@ -191,5 +188,8 @@ int		is_map_comp(char c);
 int		is_player(char c);
 void	get_y_coordinate(float *y0, float *y1, float distance, double ray_a);
 void	plot_sky_and_land(void);
+void	cleanup(void);
+void	cleanup_err(void);
+int		count_coma(char *str);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 20:22:30 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/08 11:50:37 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/13 17:52:12 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	get_txtr_pixels(uint8_t *pxl, int idx)
 
 	i = 0;
 	j = 0;
-	g_inf.txtr[idx].texture = malloc(sizeof(uint32_t) * (T_SIZE * T_SIZE) * 4);
+	g_inf.txtr[idx].texture = malloc(sizeof(uint32_t) * (T_SIZE * T_SIZE));
 	while (i < (T_SIZE * T_SIZE) * 4)
 	{
 		pixel = ft_pixel(pxl[i], pxl[i + 1], pxl[i + 2], pxl[i + 3]);
@@ -44,12 +44,21 @@ void	get_texture(void)
 	texture[1] = mlx_load_png(g_inf.so);
 	texture[2] = mlx_load_png(g_inf.we);
 	texture[3] = mlx_load_png(g_inf.ea);
+	if (!texture[0] || !texture[1] || !texture[2] || !texture[3])
+		ft_err("invalid textures");
 	i = 0;
 	while (i < 4)
 	{
 		g_inf.txtr[i].width = texture[i]->width;
 		g_inf.txtr[i].height = texture[i]->height;
 		get_txtr_pixels(texture[i]->pixels, i);
+		i++;
+	}
+	i = 0;
+	while (i < 4)
+	{
+		free(texture[i]->pixels);
+		free(texture[i]);
 		i++;
 	}
 }

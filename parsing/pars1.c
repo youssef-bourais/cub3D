@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msodor <msodor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ybourais <ybourais@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 15:21:19 by msodor            #+#    #+#             */
-/*   Updated: 2023/09/09 16:07:37 by msodor           ###   ########.fr       */
+/*   Updated: 2023/09/13 17:49:06 by ybourais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,19 @@ int	is_all_wall(char *str)
 	return (0);
 }
 
-void	get_game_info(void)
+void	tread(char *line)
 {
-	char	**info;
-	char	*line;
 	char	*one_line;
 
 	one_line = NULL;
-	line = get_next_line(g_inf.fd);
-	while (line)
-	{
-		info = ft_split(line, " \t\n");
-		if (info[0] && is_all_wall(info[0]) == 0)
-			break ;
-		set_info(info);
-		free_array(info);
-		free(line);
-		line = get_next_line(g_inf.fd);
-	}
 	while (line)
 	{
 		one_line = f_strjoin(one_line, line);
 		if (ft_strlen(line) == 1)
+		{
+			free(line);
 			break ;
+		}
 		free(line);
 		line = get_next_line(g_inf.fd);
 	}
@@ -96,4 +86,26 @@ void	get_game_info(void)
 	free(one_line);
 	if (!g_inf.map)
 		ft_err("Invalid map\n");
+}
+
+void	get_game_info(void)
+{
+	char	**info;
+	char	*line;
+
+	line = get_next_line(g_inf.fd);
+	while (line)
+	{
+		info = ft_split(line, " \t\n");
+		if (info[0] && is_all_wall(info[0]) == 0)
+		{
+			free_array(info);
+			break ;
+		}
+		set_info(info);
+		free_array(info);
+		free(line);
+		line = get_next_line(g_inf.fd);
+	}
+	tread(line);
 }
