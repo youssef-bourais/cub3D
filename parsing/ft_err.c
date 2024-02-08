@@ -34,9 +34,7 @@ void	cleanup(void)
 
 void	cleanup_err(void)
 {
-	int	i;
 
-	i = 0;
 	free(g_inf.ray_distante);
 	free(g_inf.is_vertical);
 }

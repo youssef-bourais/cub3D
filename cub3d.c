@@ -28,6 +28,9 @@ void	checks(void)
 		ft_err("Missing info : colors\n");
 }
 
+
+t_elems	g_inf;
+
 int	main(int ac, char **av)
 {
 	if (ac != 2)

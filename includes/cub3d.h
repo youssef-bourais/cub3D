@@ -75,7 +75,7 @@ typedef struct s_elems
 	float		ray_angle[WIDTH];
 }					t_elems;
 
-t_elems	g_inf;
+extern t_elems	g_inf;
 
 typedef struct s_coordinate
 {
